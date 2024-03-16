@@ -425,14 +425,14 @@
                 document.getElementById('hidden_nomor_ktp').style.display = "none";
                 identitas_lain.setAttribute('required', 'true');
                 nomor_identitas_lain.setAttribute('required', 'true');
-                nomor_ktp.setAttribute('required', 'false');
+                // nomor_ktp.setAttribute('required', 'false');
 
             } else {
                 document.getElementById('hidden_identitas_lain').style.display = "none";
                 document.getElementById('hidden_nomor_ktp').style.display = "block";
                 nomor_ktp.setAttribute('required', 'true');
-                identitas_lain.setAttribute('required', 'false');
-                nomor_identitas_lain.setAttribute('required', 'false');
+                // identitas_lain.setAttribute('required', 'false');
+                // nomor_identitas_lain.setAttribute('required', 'false');
 
             }
         }

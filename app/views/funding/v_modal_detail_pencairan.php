@@ -130,6 +130,25 @@ header('Content-Type: application/pdf');
                                 <td style="width: 200px; background-color: #F4F4F4; ">Keterangan Funding</td>
                                 <td><?= $data['detail']['keterangan_funding'] ?></td>
                             </tr>
+
+                            <tr>
+                                <?php if (empty($data['detail']['rekomendasi_pejabat_cabang'])) { ?>
+                                    <td style="width: 200px; background-color: #F4F4F4; display:none; ">Rekomendasi Pejabat Cabang</td>
+                                    <td style='display:none;'><?= $data['detail']['rekomendasi_pejabat_cabang'] ?></td>
+                                <?php } else { ?>
+                                    <td style="width: 200px; background-color: #F4F4F4; ">Rekomendasi Pejabat Cabang</td>
+                                    <td><?= $data['detail']['rekomendasi_pejabat_cabang'] ?></td>
+                                <?php } ?>
+                            </tr>
+                            <tr>
+                                <?php if (empty($data['detail']['user_verifikator'])) { ?>
+                                    <td style="width: 200px; background-color: #F4F4F4; display:none;">Pejabat Pemberi Rekomendasi</td>
+                                    <td style='display:none;'></td>
+                                <?php } else { ?>
+                                    <td style="width: 200px; background-color: #F4F4F4;">Pejabat Pemberi Rekomendasi</td>
+                                    <td><?= $data['detail']['user_verifikator'] ?></td>
+                                <?php } ?>
+                            </tr>
                            
                             <tr>
                                 <?php if (empty($data['detail']['jenis_permohonan_pencairan_sebelum_jt_approval'])) { ?>
@@ -240,6 +259,26 @@ header('Content-Type: application/pdf');
                                         <?= $file ?>
                                     </td>
                                 <?php endif; ?>
+                            </tr>
+                            <tr>
+                                <?php if (!empty($data['detail']['bukti_persetujuan_manual'])) : ?>
+                                    <td style="width: 200px; background-color: #F4F4F4;">Bukti Persetujuan Manual</td>
+                                    <td>
+                                        <?php
+                                            $file = $data['detail']['bukti_persetujuan_manual'];                                            
+                                            $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+                                            // echo 'URL Lengkap: ' . BASEURL . '/upload/funding/' . $file . '<br>';
+                                            if ($fileExtension === 'pdf') {
+                                                echo '<a href="' . BASEURL . '/upload/funding/bukti/' . $file . '" target="_blank">Lihat File</a>';                                               
+                                            } else {
+                                                // Jika bukan file PDF, tampilkan sebagai gambar seperti sebelumnya
+                                                echo '<a href="' . BASEURL . '/upload/funding/bukti/' . $file . '" target="_blank">Lihat File</a>';
+                                            }
+                                        ?>
+                                        <br>
+                                        <?= $file ?>
+                                    </td>
+                                <?php endif; ?>                            
                             </tr>
                             <tr>
                                 <td style="width: 200px; background-color: #F4F4F4; ">Status Permohonan</td>

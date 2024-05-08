@@ -220,7 +220,6 @@
                                                                 echo '<td>' . $row['jenis_permohonan_pencairan_sebelum_jt_pengajuan'] . '</td>';
                                                             }
                                                             ?>
-
                                                             <td>
                                                                 <?php
                                                                 $limit_min = $data['view']['limit_min'];
@@ -236,8 +235,6 @@
                                                                     <?php
                                                                     }
                                                                 } else if ($_COOKIE['kd_jabatan'] == 'BM') {
-
-                                                                    // if ($row['jenis_permohonan'] == 'SUKU BUNGA KHUSUS' && ($row['nilai_suku_bunga_pengajuan'] > $limit_min && $row['nilai_suku_bunga_pengajuan'] <= $limit_max)) {
                                                                     if (($row['jenis_permohonan'] == 'PENCAIRAN SEBELUM JATUH TEMPO' && $row['status_nasabah'] == 'NASABAH PRIORITY')) {
                                                                         $approvalLink = BASEURL . '/approval/form_approval_pencairan/' . $row['id_permohonan'];
                                                                     ?>
@@ -251,49 +248,69 @@
                                                                     } else {
                                                                         if ($row['jenis_permohonan'] == 'SUKU BUNGA KHUSUS') {
                                                                         ?>
-                                                                            <button class="btn btn-outline-info" id="btn_modal_detail" data-id_permohonan="<?= $row['id_permohonan'] ?>">Detail</button> <?php
-                                                                            } else {
-                                                                                                                                                                                                            ?>
-                                                                            <button class="btn btn-outline-info" id="btn_modal_pencairan" data-id_permohonan="<?= $row['id_permohonan'] ?>">Detail</button>
-                                                                        <?php
-                                                                        }                                                                                                                                                                                                    }
-                                                                       } else if ($_COOKIE['kd_jabatan'] == 'AM' || $_COOKIE['kd_jabatan'] == 'BAM') {
-                                                                        if ($row['jenis_permohonan'] == 'SUKU BUNGA KHUSUS' && $row['nilai_suku_bunga_pengajuan'] <= $limit_max) {
-                                                                        ?>
-                                                                        <a href="<?= BASEURL; ?>/approval/form_approval/<?= $row['id_permohonan'] ?>" class="btn btn-primary">Proses</a>
+                                                                            <!-- <button class="btn btn-outline-info" id="btn_modal_detail" data-id_permohonan="<?= $row['id_permohonan'] ?>">Detail</button> -->
+                                                                            <a href="<?= BASEURL; ?>/approval/form_rekomendasi_suku_bunga/<?= $row['id_permohonan'] ?>" class="btn btn-success">Verifikasi</a>
                                                                         <?php
                                                                         } else {
-                                                                            if ($row['jenis_permohonan'] == 'SUKU BUNGA KHUSUS') {
                                                                         ?>
-                                                                            <button class="btn btn-outline-info" id="btn_modal_detail" data-id_permohonan="<?= $row['id_permohonan'] ?>">Detail</button>
+                                                                            <!-- <button class="btn btn-outline-info" id="btn_modal_pencairan" data-id_permohonan="<?= $row['id_permohonan'] ?>">Detail</button> -->
+                                                                            <a href="<?= BASEURL; ?>/approval/form_rekomendasi_pencairan/<?= $row['id_permohonan'] ?>" class="btn btn-success">Verifikasi</a>
                                                                         <?php
-                                                                             } else {
-                                                                        ?>
-                                                                            <button class="btn btn-outline-info" id="btn_modal_pencairan" data-id_permohonan="<?= $row['id_permohonan'] ?>">Detail</button>
-                                                                        <?php
-                                                                            }
                                                                         }
-                                                                         } else {
-                                                                         if ($row['jenis_permohonan'] == 'SUKU BUNGA KHUSUS' && ($row['nilai_suku_bunga_pengajuan'] <= $limit_max)) {
+                                                                    }
+                                                                } else if ($_COOKIE['kd_jabatan'] == 'AM' || $_COOKIE['kd_jabatan'] == 'BAM') {
+                                                                    if ($row['jenis_permohonan'] == 'SUKU BUNGA KHUSUS' && $row['nilai_suku_bunga_pengajuan'] <= $limit_max) {
                                                                         ?>
                                                                         <a href="<?= BASEURL; ?>/approval/form_approval/<?= $row['id_permohonan'] ?>" class="btn btn-primary">Proses</a>
                                                                         <?php
-                                                                             } else {
-                                                                        if ($row['jenis_permohonan'] == 'SUKU BUNGA KHUSUS') {
+                                                                    } else {
+                                                                        if ($row['jenis_permohonan'] == 'SUKU BUNGA KHUSUS' && $row['nilai_suku_bunga_pengajuan'] > 6.25) {
                                                                         ?>
-                                                                            <button class="btn btn-outline-info" id="btn_modal_detail" data-id_permohonan="<?= $row['id_permohonan'] ?>">Detail</button> <?php
-                                                                                } else {
-                                                                                     ?>
+                                                                            <a href="<?= BASEURL; ?>/approval/form_rekomendasi_suku_bunga/<?= $row['id_permohonan'] ?>" class="btn btn-success">Verifikasi</a>
+                                                                        <?php
+                                                                        } else if (($row['jenis_permohonan'] == 'PENCAIRAN SEBELUM JATUH TEMPO' && $row['status_nasabah'] != 'NASABAH PRIORITY')) {
+                                                                        ?>
+                                                                            <a href="<?= BASEURL; ?>/approval/form_rekomendasi_pencairan/<?= $row['id_permohonan'] ?>" class="btn btn-success">Verifikasi</a>
+                                                                        <?php
+                                                                        } else if (($row['jenis_permohonan'] == 'PENCAIRAN SEBELUM JATUH TEMPO' && $row['status_nasabah'] == 'NASABAH PRIORITY')) {
+                                                                        ?>
                                                                             <button class="btn btn-outline-info" id="btn_modal_pencairan" data-id_permohonan="<?= $row['id_permohonan'] ?>">Detail</button>
+                                                                        <?php
+                                                                        } else if (($row['jenis_permohonan'] == 'SUKU BUNGA KHUSUS' &&  ($row['nilai_suku_bunga_pengajuan'] > 6.00 && $row['nilai_suku_bunga_pengajuan'] <= 6.25))) {
+                                                                        ?>
+                                                                            <button class="btn btn-outline-info" id="btn_modal_pencairan" data-id_permohonan="<?= $row['id_permohonan'] ?>">Detail</button>
+                                                                        <?php
+                                                                        }
+                                                                    }
+                                                                } else {
+                                                                    if ($row['jenis_permohonan'] == 'SUKU BUNGA KHUSUS' && ($row['nilai_suku_bunga_pengajuan'] <= $limit_max)) {
+                                                                        ?>
+                                                                        <a href="<?= BASEURL; ?>/approval/form_approval/<?= $row['id_permohonan'] ?>" class="btn btn-primary">Proses</a>
+                                                                        <?php
+                                                                    } else {
+                                                                        if ($row['jenis_permohonan'] == 'SUKU BUNGA KHUSUS' && $row['nilai_suku_bunga_pengajuan'] > 6.25) {
+                                                                        ?>
+                                                                            <a href="<?= BASEURL; ?>/approval/form_rekomendasi_suku_bunga/<?= $row['id_permohonan'] ?>" class="btn btn-success">Verifikasi</a>
+                                                                        <?php
+                                                                        } else if (($row['jenis_permohonan'] == 'PENCAIRAN SEBELUM JATUH TEMPO' && $row['status_nasabah'] != 'NASABAH PRIORITY')) {
+                                                                        ?>
+                                                                            <a href="<?= BASEURL; ?>/approval/form_rekomendasi_pencairan/<?= $row['id_permohonan'] ?>" class="btn btn-success">Verifikasi</a>
+                                                                        <?php
+                                                                        } else if (($row['jenis_permohonan'] == 'PENCAIRAN SEBELUM JATUH TEMPO' && $row['status_nasabah'] == 'NASABAH PRIORITY')) {
+                                                                        ?>
+                                                                            <button class="btn btn-outline-info" id="btn_modal_pencairan" data-id_permohonan="<?= $row['id_permohonan'] ?>">Detail</button>
+                                                                        <?php
+                                                                        } else if (($row['jenis_permohonan'] == 'SUKU BUNGA KHUSUS' &&  ($row['nilai_suku_bunga_pengajuan'] > 5.75 && $row['nilai_suku_bunga_pengajuan'] <= 6.25))) {
+                                                                        ?>
+                                                                            <button class="btn btn-outline-info" id="btn_modal_detail" data-id_permohonan="<?= $row['id_permohonan'] ?>">Detail</button>
                                                                 <?php
-                                                                                                                                                                                                        }
-                                                                                                                                                                                                    }
-                                                                                                                                                                                                }
+                                                                        }
+                                                                    }
+                                                                }
                                                                 ?>
                                                             </td>
                                                         </tr>
                                                 <?php
-
                                                     endforeach;
                                                 } ?>
                                             </tbody>
@@ -406,7 +423,6 @@
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
-
 
     <script>
         $(document).on('click', '#btn_modal_detail', function(event) {

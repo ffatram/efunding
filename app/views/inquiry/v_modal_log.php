@@ -33,9 +33,6 @@
                         </thead>
                         <tbody class="">
                             <?php $a = 1;
-
-
-
                             foreach ($data['detail'] as $row) : ?>
                                 <tr>
                                     <td><?= $a++ ?></td>
@@ -44,8 +41,6 @@
                                     <td><?= $row['username'] ?></td>
                                     <td><?= isset($row['update_date']) ? date('d-m-Y H:i:s', strtotime($row['update_date'])) : ''   ?></td>
                                     <td><?= $row['keterangan']  ?></td>
-
-
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

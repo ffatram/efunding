@@ -116,6 +116,8 @@
                                 <td style="width: 200px; background-color: #F4F4F4; ">Keterangan Funding</td>
                                 <td><?= $data['detail']['keterangan_funding'] ?></td>
                             </tr>
+                           
+
                             <!-- <tr>
                                 <td style="width: 200px; background-color: #F4F4F4; ">Tanggal Permohonan</td>
                                 <td><?= $data['detail']['tgl_permohonan'] ?></td>
@@ -256,8 +258,6 @@
 
                                 </td>
                             </tr>
-
-
                             <!-- timeline status permohonan -->
                             <!-- <tr>
                             <td colspan="2"> 
@@ -347,6 +347,12 @@
         </div>
     </div> -->
     </div>
+    <script>
+    window.onload = function() {
+        // Fokuskan textarea saat halaman dimuat
+        document.getElementById("rekomendasi_pejabat").focus();
+    };
+</script>
 
 
 

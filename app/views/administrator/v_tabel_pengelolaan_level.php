@@ -17,7 +17,6 @@
                 <th><?= $header[$a] ?></th>
 
             <?php  } ?>
-
         </tr>
     </thead>
     <tbody>

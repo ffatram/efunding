@@ -34,9 +34,8 @@
                 <td><?= isset($row['kd_jabatan']) ? $row['kd_jabatan'] : '' ?></td>
                 <td><?= isset($row['kode_cabang']) ? $row['kode_cabang'] : '' ?></td>
                 <td><?= isset($row['nama_cabang']) ? $row['nama_cabang'] : '' ?></td>
-
                 <td>
-                    <div class=" d-flex justify-content-center">
+                    <div class="d-flex justify-content-center">
                         <button class="btn btn-primary btn-sm mr-2 edit" data-target="#modalEdit" data-toggle="modal" data-id='<?= $row['id_user'] ?>' data-username='<?= isset($row['username']) ? $row['username'] : '' ?>' data-nama_lengkap='<?= isset($row['nama_lengkap']) ? $row['nama_lengkap'] : '' ?>' data-level='<?= isset($row['level']) ? $row['level'] : '' ?>' data-kd_jabatan='<?= isset($row['kd_jabatan']) ? $row['kd_jabatan'] : '' ?>' data-kode_cabang='<?= isset($row['kode_cabang']) ? $row['kode_cabang'] : '' ?>' data-tipe_komite='<?= isset($row['tipe_komite']) ? $row['tipe_komite'] : '' ?>'>Edit</button>
                         <button class="btn btn-warning btn-sm mr-2 btn_reset_password" username="<?= isset($row['username']) ? $row['username'] : '' ?>" id='<?= $row['id_user'] ?>'  nama_lengkap='<?= $row['nama_lengkap']?>'>Reset Password</button>
                         <button class="btn btn-danger btn-sm btn_hapus" id='<?= $row['id_user'] ?>' nama_lengkap='<?= $row['nama_lengkap']?>'>Hapus</button>

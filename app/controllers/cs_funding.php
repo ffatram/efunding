@@ -330,34 +330,6 @@ class cs_funding extends Controller
                     }
                 }
             }
-            // Check if it's a PDF file
-            // if ($fileTypeBukti === 'pdf') {
-            //     // Simpan nama file PDF ke dalam variabel $_POST['bilyet']
-            //     $_POST['bukti_ttd'] = $_FILES["bukti_ttd"]["name"];
-
-            //     // Move the PDF file to the specific directory
-            //     if (move_uploaded_file($_FILES["bukti_ttd"]["tmp_name"], $targetFileBukti)) {
-            //         echo "The PDF file has been uploaded.";
-            //     } else {
-            //         echo "Sorry, there was an error uploading your PDF file.";
-            //     }
-            // } else {
-            //     // Check if it's an image file
-            //     if (!getimagesize($_FILES["bukti_ttd"]["tmp_name"])) {
-            //         echo "File is not a valid image.";
-            //         $uploadOkBukti = false;
-            //     } else {
-            //         // Simpan nama file gambar ke dalam variabel $_POST['bilyet']
-            //         $_POST['bukti_ttd'] = $_FILES["bukti_ttd"]["name"];
-
-            //         // Move the image file to the specific directory if uploadOk is still true
-            //         if (move_uploaded_file($_FILES["bukti_ttd"]["tmp_name"], $targetFileBukti)) {
-            //             echo "The image file has been uploaded.";
-            //         } else {
-            //             echo "Sorry, there was an error uploading your image file.";
-            //         }
-            //     }
-            // }
         }
 
         // Check if file already exists
@@ -506,6 +478,79 @@ class cs_funding extends Controller
 
     public function update_data_pencairan()
     {
+        $targetDir = "upload/funding/bukti/"; // Direktori untuk menyimpan file yang diunggah
+
+        $uploadOk = true;
+
+        // Mendapatkan ekstensi file yang diunggah
+        $fileType = strtolower(pathinfo($_FILES["bukti_manual"]["name"], PATHINFO_EXTENSION));
+
+        // Path lengkap ke file yang diunggah
+        $targetFile = $targetDir . basename($_FILES["bukti_manual"]["name"]);
+
+        // Function untuk menangani unggahan file
+        function handleFileUploadBuktiManualPencairan($targetFile, $fileType)
+        {
+            global $uploadOk;
+
+            // Check if it's a PDF file
+            if ($fileType === 'pdf') {
+                // Move the PDF file to the specific directory
+                if (move_uploaded_file($_FILES["bukti_manual"]["tmp_name"], $targetFile)) {
+                    $_POST['bukti_manual'] = basename($_FILES["bukti_manual"]["name"]);
+                    return true;
+                } else {
+                    echo "Sorry, there was an error uploading your PDF file.";
+                    $uploadOk = false;
+                    return false;
+                }
+            } else {
+                // Check if it's an image file
+                if (!getimagesize($_FILES["bukti_manual"]["tmp_name"])) {
+                    echo "File is not a valid image.";
+                    $uploadOk = false;
+                    return false;
+                } else {
+                    // Move the image file to the specific directory if uploadOk is still true
+                    if (move_uploaded_file($_FILES["bukti_manual"]["tmp_name"], $targetFile)) {
+                        $_POST['bukti_manual'] = basename($_FILES["bukti_manual"]["name"]);
+                        return true;
+                    } else {
+                        echo "Sorry, there was an error uploading your image file.";
+                        $uploadOk = false;
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // Check if file already exists
+        if (file_exists($targetFile)) {
+            echo "Sorry, the file already exists.";
+            $uploadOk = false;
+        }
+
+        // Check file size (adjust as needed)
+        if ($_FILES["bukti_manual"]["size"] > 10 * 1024 * 1024) { // 10 MB
+            echo "Sorry, your file is too large.";
+            $uploadOk = false;
+        }
+
+        // Allow only certain file formats (you can customize this)
+        $allowedFileTypes = array("jpg", "jpeg", "png", "gif", "pdf");
+        if (!in_array($fileType, $allowedFileTypes)) {
+            echo "Sorry, only JPG, JPEG, PNG, GIF, and PDF files are allowed.";
+            $uploadOk = false;
+        }
+
+        // Handle file upload if uploadOk is still true
+        if ($uploadOk) {
+            if (handleFileUploadBuktiManualPencairan($targetFile, $fileType)) {
+                echo "Nama file yang diunggah: " . $_POST['bukti_ttd'];
+            }
+        }
+        $_POST['bukti_manual'] = $_FILES["bukti_manual"]["name"];
+        $_POST['bukti_persetujuan_manual'] = $_POST['bukti_persetujuan_manual'];
         if (isset($_POST['status_nasabah'])) {
             $_POST['status_nasabah'] = 'NASABAH PRIORITY';
         } else {
@@ -521,44 +566,7 @@ class cs_funding extends Controller
             header('Location:' . BASEURL . '/cs_funding/edit_permohonan_pencairan');
         }
     }
-    // tidak ada upload bukti ttd
-    // public function simpan_data_suku_bunga()
-    // {
-    //     // Simpan tanda tangan digital ke dalam folder di htdocs
-    //     $imgData = $_POST['ttd_nasabah'];
-
-    //     // Menghilangkan header data yang tidak diperlukan dari data URL
-    //     $imgData = str_replace('data:image/png;base64,', '', $imgData);
-    //     $imgData = str_replace(' ', '+', $imgData);
-
-    //     // Mendekode data URL menjadi data biner
-    //     $imgBinary = base64_decode($imgData);
-
-    //     // Menentukan lokasi dan nama file untuk menyimpan gambar (ganti 'upload/tanda_tangan/' sesuai dengan struktur folder Anda)
-    //     $filePath = 'upload/ttd/';
-    //     $nama = str_replace(' ', '', $_POST['nama_nasabah']);
-    //     $ttdName = uniqid('ttd_' . $nama) . '.png';
-    //     // Menyimpan gambar ke dalam file di server
-    //     file_put_contents($filePath . $ttdName, $imgBinary);
-
-    //     $data['id_terbesar'] = $this->model('m_cs_funding')->kode_terbesar_suku_bunga();
-    //     $kode = $data['id_terbesar']['kode_terbesar'];
-    //     $urutan = (int) substr($kode, 4, 6);
-    //     $urutan++;
-    //     $huruf = "SBK";
-    //     $id_permohonan = $huruf . sprintf("%06s", $urutan);
-
-    //     $_POST['id_permohonan'] = $id_permohonan;
-    //     $_POST['ttd_nasabah'] = $ttdName;
-    //     $_POST['kode_cabang'] = $_COOKIE['kode_cabang'];
-    //     $_POST['username'] = $_COOKIE['username'];
-    //     $_POST['nama_nasabah'] = $_POST['nama_nasabah'];
-    //     if ($this->model('m_cs_funding')->simpan_data_suku_bunga() > 0 && $this->model('m_rc_log')->simpan_pemohon($_POST) > 0) {
-    //         header('Location:' . BASEURL . '/cs_funding/suku_bunga');
-    //     } else {
-    //         header('Location:' . BASEURL . '/cs_funding/form_suku_bunga');
-    //     }
-    // }
+    
 
     // ada bukti upload ttd
     public function simpan_data_suku_bunga()
@@ -696,19 +704,93 @@ class cs_funding extends Controller
         $this->view('cs_funding/edit_permohonan_suku_bunga', $data);
     }
 
+    // public function update_data_suku_bunga()
+    // {
+    //     $_POST['id_permohonan'] = $_POST['id_permohonan'];
+    //     $_POST['nama_nasabah'] = $_POST['nama_nasabah'];
+    //     if ($this->model('m_cs_funding')->update_data_suku_bunga() > 0 && $this->model('m_rc_log')->update_pemohon($_POST) > 0) {
+
+    //         header('Location:' . BASEURL . '/cs_funding/suku_bunga');
+    //     } else {
+
+    //         header('Location:' . BASEURL . '/cs_funding/edit_permohonan_suku_bunga');
+    //     }
+    // }
+
     public function update_data_suku_bunga()
     {
+        $targetDir = "upload/funding/bukti/"; // Direktori untuk menyimpan file yang diunggah
+        $uploadOk = true;
+        $fileType = strtolower(pathinfo($_FILES["bukti_manual"]["name"], PATHINFO_EXTENSION));
+        $targetFile = $targetDir . basename($_FILES["bukti_manual"]["name"]);
+        function handleFileUploadBuktiManual($targetFile, $fileType)
+        {
+            global $uploadOk;
+            if ($fileType === 'pdf') {
+                // Move the PDF file to the specific directory
+                if (move_uploaded_file($_FILES["bukti_manual"]["tmp_name"], $targetFile)) {
+                    $_POST['bukti_manual'] = basename($_FILES["bukti_manual"]["name"]);
+                    return true;
+                } else {
+                    echo "Sorry, there was an error uploading your PDF file.";
+                    $uploadOk = false;
+                    return false;
+                }
+            } else {
+                // Check if it's an image file
+                if (!getimagesize($_FILES["bukti_manual"]["tmp_name"])) {
+                    echo "File is not a valid image.";
+                    $uploadOk = false;
+                    return false;
+                } else {
+                    // Move the image file to the specific directory if uploadOk is still true
+                    if (move_uploaded_file($_FILES["bukti_manual"]["tmp_name"], $targetFile)) {
+                        $_POST['bukti_manual'] = basename($_FILES["bukti_manual"]["name"]);
+                        return true;
+                    } else {
+                        echo "Sorry, there was an error uploading your image file.";
+                        $uploadOk = false;
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // Check if file already exists
+        if (file_exists($targetFile)) {
+            echo "Sorry, the file already exists.";
+            $uploadOk = false;
+        }
+
+        // Check file size (adjust as needed)
+        if ($_FILES["bukti_manual"]["size"] > 10 * 1024 * 1024) { // 10 MB
+            echo "Sorry, your file is too large.";
+            $uploadOk = false;
+        }
+
+        // Allow only certain file formats (you can customize this)
+        $allowedFileTypes = array("jpg", "jpeg", "png", "gif", "pdf");
+        if (!in_array($fileType, $allowedFileTypes)) {
+            echo "Sorry, only JPG, JPEG, PNG, GIF, and PDF files are allowed.";
+            $uploadOk = false;
+        }
+
+        // Handle file upload if uploadOk is still true
+        if ($uploadOk) {
+            if (handleFileUploadBuktiManual($targetFile, $fileType)) {
+                echo "Nama file yang diunggah: " . $_POST['bukti_manual'];
+            }
+        }
+        $_POST['bukti_manual'] = $_FILES["bukti_manual"]["name"];
+        $_POST['bukti_persetujuan_manual'] = $_POST['bukti_persetujuan_manual'];
         $_POST['id_permohonan'] = $_POST['id_permohonan'];
         $_POST['nama_nasabah'] = $_POST['nama_nasabah'];
         if ($this->model('m_cs_funding')->update_data_suku_bunga() > 0 && $this->model('m_rc_log')->update_pemohon($_POST) > 0) {
-
             header('Location:' . BASEURL . '/cs_funding/suku_bunga');
         } else {
-
             header('Location:' . BASEURL . '/cs_funding/edit_permohonan_suku_bunga');
         }
     }
-
     public function  cek_btn_hapus()
     {
 
@@ -768,7 +850,6 @@ class cs_funding extends Controller
 
     public function  cek_btn_tolak()
     {
-
         $data['1'] = $this->model('m_cs_funding')->cek_btn_tolak();
         if ($data['1'] > 0) {
             echo '1';
@@ -781,8 +862,6 @@ class cs_funding extends Controller
     {
         // $_POST['id'] = $id;
         $_POST['id_permohonan'];
-
-
         if ($this->model('m_cs_funding')->tolak($_POST) > 0) {
             echo "sukses";
         } else {
@@ -792,7 +871,6 @@ class cs_funding extends Controller
 
     public function modal_detail()
     {
-
         $data['detail'] = $this->model('m_funding')->modal_detail($_POST);
         if ($data['detail']['status_permohonan'] == 'DIBATALKAN') {
             $this->view('cs_funding/v_modal_suku_batal', $data);

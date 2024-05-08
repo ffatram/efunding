@@ -82,7 +82,7 @@
 
 
 
-                    <form id="form_funding_edit_data_suku_bunga" id="form_update" action="<?= BASEURL; ?>/cs_funding/update_data_suku_bunga" method="POST">
+                    <form id="form_funding_edit_data_suku_bunga" id="form_update" action="<?= BASEURL; ?>/cs_funding/update_data_suku_bunga" method="POST" enctype="multipart/form-data">
                         <main class="content">
                             <div class="container-fluid p-0">
                                 <div class="row ">
@@ -229,8 +229,38 @@
                                                     <label for="alamat-text" class="col-form-label">Keterangan Funding</label>
                                                     <textarea class="form-control" name="keterangan_funding" required oninput="this.value = this.value.toUpperCase()"> <?= $data['data_suku_bunga']['keterangan_funding']  ?></textarea>
                                                 </div>
-                                                <button id="btn_form_funding_edit_data_suku_bunga" type="submit" class="btn btn-primary btn-lg">Update</button>
-                                                <a onclick="btn_batal_edit_suku_bunga(event); return false" href="<?= BASEURL; ?>/cs_funding/suku_bunga" class="btn btn-secondary btn-lg">Batal</a>
+                                                <input type="hidden" class="form-control" name="bukti_persetujuan_manual" value="<?= $data['data_suku_bunga']['bukti_persetujuan_manual'] ?>" />
+                                                <?php if (!empty($data['data_suku_bunga']['bukti_persetujuan_manual'])) : ?>
+                                                    <label class="mt-2 mb-2">Bukti Persetujuan Manual</label><span class="ml-1" style="color:red;"></span>
+                                                    <br>
+                                                    <?php
+                                                    $file = $data['data_suku_bunga']['bukti_persetujuan_manual'];
+                                                    $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+                                                    if ($fileExtension === 'pdf') {
+                                                        echo '<a href="' . BASEURL . '/upload/funding/bukti/' . $file . '" target="_blank">Lihat File</a>';
+                                                    } else {
+                                                        echo '<a href="' . BASEURL . '/upload/funding/bukti/' . $file . '" target="_blank">Lihat File</a>';
+                                                    }
+                                                    ?>
+                                                    <br>
+                                                    <br>
+                                                <?php else : ?>
+                                                    <div>
+                                                        <label for="alamat-text" class="col-form-label">Upload Bukti Persetujuan Manual</label>
+                                                        <div class="input-group">
+                                                            <div class="custom-file mb-3">
+                                                                <input type="file" class="custom-file-input" id="customFile" name="bukti_manual" accept=".jpg, .jpeg, .png .pdf" onchange="validateInput()">
+                                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php endif; ?>
+
+                                               
+                                                <div>
+                                                    <button id="btn_form_funding_edit_data_suku_bunga" type="submit" class="btn btn-primary btn-lg">Update</button>
+                                                    <a onclick="btn_batal_edit_suku_bunga(event); return false" href="<?= BASEURL; ?>/cs_funding/suku_bunga" class="btn btn-secondary btn-lg">Batal</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -446,6 +476,28 @@
     </script>
 
     <script>
+        // Custom file input label
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+
+        });
+    </script>
+
+    <script>
+        function validateInput() {
+            var fileInput = document.getElementById('customFile');
+            var filePath = fileInput.value;
+            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.pdf)$/i;
+
+            if (!allowedExtensions.exec(filePath)) {
+                alert('Hanya file dengan ekstensi .jpg, .jpeg, .png atau .pdf yang diizinkan!');
+                fileInput.value = ''; // Clear the input field
+            }
+        }
+    </script>
+
+    <script>
         function AOLainnya(select) {
             if (select.value == 'LAINNYA') {
                 document.getElementById('hidden_AO_lainnya').style.display = "block";
@@ -454,7 +506,7 @@
             }
         }
     </script>
-     <script>
+    <script>
         function showIdentitasLainnya(select) {
             var identitas_lain = document.getElementById("hidden_identitas_lain");
             var nomor_identitas_lain = document.getElementById("nomor_identitas_lain");

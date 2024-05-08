@@ -632,7 +632,6 @@
                 if (/^\d$/.test(inputValue)) {
                     this.value = inputValue + ".";
                 }
-
                 // Jika input selesai dan karakter terakhir adalah titik, tambahkan "00"
                 if (inputValue.endsWith(".") && inputValue.indexOf(".") !== inputValue.length - 1) {
                     this.value = inputValue + "00";

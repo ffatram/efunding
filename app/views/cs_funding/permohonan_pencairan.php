@@ -63,6 +63,31 @@
         }
     </style>
 
+
+    <script>
+        function myFunction(dateValue) {
+            var date = new Date(dateValue);
+            var day = date.getDate();
+            var hidden_nominal_penalti = document.getElementById("hidden_nominal_penalti");
+            var hidden_jumlah_hari_mengendap = document.getElementById("hidden_jumlah_hari_mengendap");
+            var hidden_jumlah_hari = document.getElementById("hidden_jumlah_hari");
+            var hidden_nominal_bunga_berjalan = document.getElementById("hidden_nominal_bunga_berjalan");
+            if (day !== 30) {
+                // Mengatur pointer events menjadi 'none'
+                hidden_nominal_penalti.style.pointerEvents = 'none';
+                hidden_jumlah_hari_mengendap.style.pointerEvents = 'none';
+                hidden_jumlah_hari.style.pointerEvents = 'none';
+                hidden_nominal_bunga_berjalan.style.pointerEvents = 'none';
+            } else {
+                // Mengatur pointer events menjadi 'auto'
+                hidden_nominal_penalti.style.pointerEvents = 'auto';
+                hidden_jumlah_hari_mengendap.style.pointerEvents = 'auto';
+                hidden_jumlah_hari.style.pointerEvents = 'auto';
+                hidden_nominal_bunga_berjalan.style.pointerEvents = 'auto';
+            }
+        }
+    </script>
+
 </head>
 
 
@@ -238,6 +263,15 @@
                                                         <input type="date" class="form-control" id="tgl_pembentukan_visible" style="display: none" name="tgl_pembentukan_visible" onchange="myFunction(this.value)" max="" required>
                                                         <input type="hidden" id="tgl_pembentukan_hidden" name="tgl_pembentukan_hidden">
                                                     </div>
+                                                    <div class="form-group">
+                                                        <label id="label_jangka_Waktu" class="col-form-label" style="display: none">Jangka Waktu <span class="ml-1 bintang_custom" id="bintang_jangka_waktu" style="color:red;">*</span></label>
+                                                        <select id="jangka_waktu" name="jangka_waktu" style="display: none" class="form-control" required>
+                                                        </select>
+                                                        <!-- <label id="label_jangka_Waktu" class="col-form-label">Jangka Waktu <span class="ml-1 bintang_custom" id="bintang_jangka_waktu" style="color:red;">*</span></label>
+                                                        <select id="jangka_waktu" name="jangka_waktu" class="form-control" required>
+
+                                                        </select> -->
+                                                    </div>
 
 
 
@@ -248,15 +282,7 @@
                                     <div class="col-12 col-lg-6 col-xxl-6 ">
                                         <div class="card flex-fill">
                                             <div class="card-body">
-                                                <div class="form-group">
-                                                    <label id="label_jangka_Waktu" class="col-form-label" style="display: none">Jangka Waktu <span class="ml-1 bintang_custom" id="bintang_jangka_waktu" style="color:red;">*</span></label>
-                                                    <select id="jangka_waktu" name="jangka_waktu" style="display: none" class="form-control" required>
-                                                    </select>
-                                                    <!-- <label id="label_jangka_Waktu" class="col-form-label">Jangka Waktu <span class="ml-1 bintang_custom" id="bintang_jangka_waktu" style="color:red;">*</span></label>
-                                                        <select id="jangka_waktu" name="jangka_waktu" class="form-control" required>
 
-                                                        </select> -->
-                                                </div>
 
                                                 <div>
                                                     <label class="col-form-label label-custom" id="label_norek_deposito" style="display: none">Nomor Rekening Deposito<span class="bintang-custom" style="color:red"> *</span></label>

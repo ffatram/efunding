@@ -115,14 +115,6 @@
                                                             <label class="mt-2 mb-2">History Permohonan</label><span class="ml-1" style="color:red;"></span>
                                                             <textarea class="form-control" name="history_permohonan" style="height: 100px;" disabled><?= $data['data_permohonan']['history_permohonan'] ?></textarea>
                                                         </div> -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-lg-6 col-xxl-6 ">
-                                        <div class="card flex-fill">
-                                            <div class="card-body">
-                                                <div class="form-group">
                                                     <?php if ($data['data_permohonan']['alasan_pengajuan'] === 'SUDAH JATUH TEMPO & DIPERPANJANG') { ?>
                                                         <label class="mt-2 mb-2">Tanggal Perpanjangan Deposito</label><span class="ml-1" style="color:red;"></span>
                                                     <?php
@@ -134,6 +126,15 @@
 
                                                     ?>
                                                     <input type="text" class="form-control" name="tgl_pembentukan" value="<?= date('d-m-Y', strtotime($data['data_permohonan']['tgl_pembentukan']))  ?>" disabled />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-6 col-xxl-6 ">
+                                        <div class="card flex-fill">
+                                            <div class="card-body">
+                                                <div class="form-group">
 
 
                                                     <label class="mt-2 mb-2">Jangka Waktu</label><span class="ml-1" style="color:red;"></span>
@@ -177,12 +178,10 @@
                                                         <br>
                                                         <!-- <?= $file ?> -->
                                                     </div>
-
-
-
-
-                                                    <!-- <label class="mt-2 mb-2">Keterangan Approval</label></span>
-                                                        <textarea class="form-control" name="keterangan_approval" id="keterangan_approval" oninput="this.value = this.value.toUpperCase()"></textarea> -->
+                                                    <div style="display:none" id="hidden_rekomendasi">
+                                                        <label class="mt-2 mb-2">Catatan Rekomendasi Pejabat Cabang </label><span class="ml-1" style="color:red;"></span>
+                                                        <textarea class="form-control" style="height: 100px;" name="keterangan_funding" id="rekomendasi_pejabat_cabang" disabled><?= $data['data_permohonan']['rekomendasi_pejabat_cabang'] ?></textarea>
+                                                    </div>
                                                 </div>
                                                 <button class="btn btn-primary btn-lg" type="submit" id="btn_form_approval_edit_data_approval" value="approve" data-id_permohonan="<?= $row['id_permohonan'] ?>">Approve</button>
                                                 <button class="btn btn-lg btn-danger" type='submit' id="btn_reject" value="reject" data-id_permohonan="<?= $row['id_permohonan'] ?>">Reject</button>
@@ -194,20 +193,36 @@
                         </main>
                     </form>
                     <?php
-                            if (!empty($data['data_permohonan']['nama_gambar'])) {
-                            ?>
-                                <script>
-                                    document.getElementById("hidden_bilyet").style.display = "block";
-                                </script>
-                            <?php
-                            } else {
-                            ?>
-                                <script>
-                                document.getElementById("hidden_bilyet").style.display = "none";
-                                </script>
-                            <?php
-                            }
-                         ?>
+                    if (!empty($data['data_permohonan']['nama_gambar'])) {
+                    ?>
+                        <script>
+                            document.getElementById("hidden_bilyet").style.display = "block";
+                        </script>
+                    <?php
+                    } else {
+                    ?>
+                        <script>
+                            document.getElementById("hidden_bilyet").style.display = "none";
+                        </script>
+                    <?php
+                    }
+                    ?>
+
+                    <?php
+                    if (!empty($data['data_permohonan']['rekomendasi_pejabat_cabang'])) {
+                    ?>
+                        <script>
+                            document.getElementById("hidden_rekomendasi").style.display = "block";
+                        </script>
+                    <?php
+                    } else {
+                    ?>
+                        <script>
+                            document.getElementById("hidden_rekomendasi").style.display = "none";
+                        </script>
+                    <?php
+                    }
+                    ?>
                 </div>
             </section>
         </div>
@@ -278,7 +293,6 @@
                                                 </td>
                                                 <td style="display: none;" id='ket_approval'>
                                                 </td>
-
                                             </tr>
                                         </tbody>
                                     </table>
@@ -370,8 +384,6 @@
                                                     <?php } ?>
                                                 </select>
                                             </td>
-
-
                                             <td id='reject'>
 
                                             </td>
@@ -412,7 +424,6 @@
                                 <div class="col">
                                     <button id='btn_modal_reject' type="submit" class="btn btn-lg btn-danger p-3" style="width: 45%; margin-right: 5px;">Reject</button>
                                     <button id='btn_modal_pending' type="submit" class="btn btn-lg btn-info p-3" style="width: 45%;">Pending</button>
-
                                 </div>
                             </div>
                         </div>

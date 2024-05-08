@@ -122,23 +122,22 @@
                                             <input type="text" class="knob" value="<?= isset($data['jumlah_permohonan']['jumlah_data_permohonan']) ? $data['jumlah_permohonan']['jumlah_data_permohonan'] : '' ?>" data-width="100px" data-height="100px" data-fgColor="#17a2b8" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px;
                                           margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center;
                                           color: rgb(255, 255, 255); padding: 0px; appearance: none;" readonly>
-                                            <div class="knob-label" style="font-size: large;">Belum Diputuskan</div>
+                                            <div class="knob-label" style="font-size: medium;">Belum Diputuskan</div>
                                         </div>
-                                        <!-- ./col -->
+
                                         <div class="col-4 text-center">
-                                            <!-- <input type="text" class="knob" data-readonly="true" value="50" data-width="100px" data-height="100 px" data-fgColor="#39CCCC"> -->
-                                            <input type="text" class="knob" value="<?= isset($data['jumlah_disetujui']['jumlah_data_disetujui']) ? $data['jumlah_disetujui']['jumlah_data_disetujui'] : '' ?><sup style="font-size: " data-width="100px" data-height="100px" data-fgColor="#17a2b8" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px;
+                                            <input type="text" class="knob" value="<?= isset($data['jumlah_disetujui']['jumlah_data_disetujui']) ? $data['jumlah_disetujui']['jumlah_data_disetujui'] : '' ?>" readonly data-width="100px" data-height="100px" data-fgColor="#17a2b8" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px;
                                           margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center;
-                                          color: rgb(255, 255, 255); padding: 0px; appearance: none;" readonly>
-                                            <div class="knob-label" style="font-size: large;">Disetujui</div>
+                                          color: rgb(255, 255, 255); padding: 0px; appearance: none;">
+                                            <div class="knob-label" style="font-size: medium;">Disetujui</div>
                                         </div>
-                                        <!-- ./col -->
+                                      
                                         <div class="col-4 text-center">
                                             <!-- <input type="text" class="knob" data-readonly="true" value="30" data-width="100px" data-height="100 px" data-fgColor="#39CCCC"> -->
                                             <input type="text" class="knob" value="<?= isset($data['jumlah_ditolak']['jumlah_data_ditolak']) ? $data['jumlah_ditolak']['jumlah_data_ditolak'] : '' ?>" data-width="100px" data-height="100px" data-fgColor="#17a2b8" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px;
                                           margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center;
                                           color: rgb(255, 255, 255); padding: 0px; appearance: none;" readonly>
-                                            <div class="knob-label" style="font-size: large;">Ditolak</div>
+                                            <div class="knob-label" style="font-size: medium;">Ditolak</div>
                                         </div>
                                         <!-- ./col -->
                                     </div>

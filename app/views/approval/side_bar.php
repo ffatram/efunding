@@ -60,37 +60,46 @@
 
                         $this->db = new Database;
                         if ($_COOKIE['kd_jabatan'] == 'DIR') {
-                            $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE (jenis_permohonan ="PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah IS NULL AND status_permohonan = "DIAJUKAN") OR ((nilai_suku_bunga_pengajuan > 6.25  AND nilai_suku_bunga_pengajuan <= 6.75) AND status_permohonan ="DIAJUKAN")');
+                            $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE (jenis_permohonan ="PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah IS NULL AND status_permohonan = "DIVERIFIKASI") OR ((nilai_suku_bunga_pengajuan > 6.25  AND nilai_suku_bunga_pengajuan <= 6.75) AND status_permohonan ="DIVERIFIKASI")');
                             $this->db->execute();
                             $jumlah_diajukan =  $this->db->rowCount();
                         } else if ($_COOKIE['kd_jabatan'] == 'BM') {
                             if ($_COOKIE['nama_cabang'] == "CABANG UTAMA") {
-                                $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE (nilai_suku_bunga_pengajuan <= 6.25 OR (jenis_permohonan = "PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah="NASABAH PRIORITY")) AND (kantor_cabang = :kantor_cabang OR kantor_cabang = :kantor_cabang1) AND status_permohonan ="DIAJUKAN"');
+                                // $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE (nilai_suku_bunga_pengajuan <= 6.25 OR (jenis_permohonan = "PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah="NASABAH PRIORITY")) AND (kantor_cabang = :kantor_cabang OR kantor_cabang = :kantor_cabang1) AND status_permohonan ="DIAJUKAN"');
+                                $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE (kantor_cabang = :kantor_cabang OR kantor_cabang = :kantor_cabang1) AND status_permohonan ="DIAJUKAN"');
                                 $this->db->bind('kantor_cabang', $_COOKIE['nama_cabang']);
                                 $this->db->bind('kantor_cabang1', "KANTOR KAS");
                                 $this->db->execute();
                                 $jumlah_diajukan =  $this->db->rowCount();
                             } else {
-                                $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE (nilai_suku_bunga_pengajuan <= 6.25 OR (jenis_permohonan = "PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah="NASABAH PRIORITY")) AND kantor_cabang = :kantor_cabang  AND status_permohonan ="DIAJUKAN"');
+                                // $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE (nilai_suku_bunga_pengajuan <= 6.25 OR (jenis_permohonan = "PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah="NASABAH PRIORITY")) AND kantor_cabang = :kantor_cabang  AND status_permohonan ="DIAJUKAN"');
+                                $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE kantor_cabang = :kantor_cabang  AND status_permohonan ="DIAJUKAN"');
                                 $this->db->bind('kantor_cabang', $_COOKIE['nama_cabang']);
                                 $this->db->execute();
                                 $jumlah_diajukan =  $this->db->rowCount();
                             }
                         } else if ($_COOKIE['kd_jabatan'] == 'AM' || $_COOKIE['kd_jabatan'] == 'BAM') {
                             if ($_COOKIE['nama_cabang'] == "CABANG UTAMA") {
-                                $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE nilai_suku_bunga_pengajuan <= 6.00 AND (kantor_cabang = :kantor_cabang OR kantor_cabang = :kantor_cabang1) AND status_permohonan ="DIAJUKAN"');
+                                // $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE nilai_suku_bunga_pengajuan <= 6.00 AND (kantor_cabang = :kantor_cabang OR kantor_cabang = :kantor_cabang1) AND status_permohonan ="DIAJUKAN"');
+                                $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE ((nilai_suku_bunga_pengajuan <= 6.00 OR nilai_suku_bunga_pengajuan > 6.25) OR (jenis_permohonan ="PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah is null)) AND (kantor_cabang = :kantor_cabang OR kantor_cabang = :kantor_cabang1) AND status_permohonan ="DIAJUKAN"');
                                 $this->db->bind('kantor_cabang', $_COOKIE['nama_cabang']);
                                 $this->db->bind('kantor_cabang1', "KANTOR KAS");
                                 $this->db->execute();
                                 $jumlah_diajukan =  $this->db->rowCount();
                             } else {
-                                $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE nilai_suku_bunga_pengajuan <= 6.00 AND kantor_cabang = :kantor_cabang AND status_permohonan ="DIAJUKAN"');
+                                $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE ((nilai_suku_bunga_pengajuan <= 6.00 OR nilai_suku_bunga_pengajuan > 6.25) OR (jenis_permohonan ="PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah is null)) AND kantor_cabang = :kantor_cabang AND status_permohonan ="DIAJUKAN"');
                                 $this->db->bind('kantor_cabang', $_COOKIE['nama_cabang']);
                                 $this->db->execute();
                                 $jumlah_diajukan =  $this->db->rowCount();
                             }
                         } else {
-                            $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE nilai_suku_bunga_pengajuan <= 5.75   AND kantor_cabang = :kantor_cabang AND status_permohonan ="DIAJUKAN"');
+                            // $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE nilai_suku_bunga_pengajuan <= 5.75   AND kantor_cabang = :kantor_cabang AND status_permohonan ="DIAJUKAN"');
+                            $this->db->query('SELECT * FROM tbl_rc_permohonan 
+                            WHERE ((nilai_suku_bunga_pengajuan <= 5.75 OR nilai_suku_bunga_pengajuan > 6.25) 
+                            OR (jenis_permohonan ="PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah is null))
+                            AND kantor_cabang = :kantor_cabang 
+                            AND status_permohonan ="DIAJUKAN"');
+
                             $this->db->bind('kantor_cabang', $_COOKIE['nama_cabang']);
                             $this->db->execute();
                             $jumlah_diajukan =  $this->db->rowCount();
@@ -134,4 +143,5 @@
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
+
 </aside>

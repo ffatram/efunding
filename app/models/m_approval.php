@@ -37,7 +37,8 @@ class m_approval
     public function lihat_data()
     {
         if ($_COOKIE['kd_jabatan'] == 'DIR') {
-            $this->db->query('SELECT * from tbl_rc_permohonan where (jenis_permohonan = "PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah IS NULL AND status_permohonan="DIAJUKAN" ) OR (nilai_suku_bunga_pengajuan > 6.25  AND status_permohonan ="DIAJUKAN")');
+            // $this->db->query('SELECT * from tbl_rc_permohonan where (jenis_permohonan = "PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah IS NULL AND status_permohonan="DIAJUKAN" ) OR (nilai_suku_bunga_pengajuan > 6.25  AND status_permohonan ="DIAJUKAN")');
+            $this->db->query('SELECT * from tbl_rc_permohonan where (jenis_permohonan = "PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah IS NULL AND status_permohonan="DIVERIFIKASI" ) OR (nilai_suku_bunga_pengajuan > 6.25  AND status_permohonan ="DIVERIFIKASI")');
             return $this->db->resultSet();
         } else {
             if ($_COOKIE['nama_cabang'] == "CABANG UTAMA") {
@@ -295,6 +296,42 @@ class m_approval
         $this->db->bind('tgl_pending',  $_POST['tgl_pending']);
         $this->db->bind('username_approval', $_POST['username']);
 
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function tambah_data_rekomendasi()
+    {
+        $query = "UPDATE tbl_rc_permohonan SET 
+                user_verifikator = :user_verifikator,
+                rekomendasi_pejabat_cabang = :rekomendasi_pejabat_cabang,
+                tgl_verifikasi = :tgl_verifikasi,
+                status_permohonan = :status_permohonan
+                WHERE id_permohonan = :id_permohonan";
+        $this->db->query($query);
+        $this->db->bind('id_permohonan', $_POST['id_permohonan']);
+        $this->db->bind('user_verifikator', $_POST['user_verifikator']);
+        $this->db->bind('rekomendasi_pejabat_cabang', $_POST['rekomendasi_pejabat']);
+        $this->db->bind('tgl_verifikasi', $_POST['tgl_verifikasi']);
+        $this->db->bind('status_permohonan', $_POST['status_permohonan']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function tambah_rekomendasi_suku_bunga()
+    {
+        $query = "UPDATE tbl_rc_permohonan SET 
+                user_verifikator = :user_verifikator,
+                rekomendasi_pejabat_cabang = :rekomendasi_pejabat_cabang,
+                tgl_verifikasi = :tgl_verifikasi,
+                status_permohonan = :status_permohonan
+                WHERE id_permohonan = :id_permohonan";
+        $this->db->query($query);
+        $this->db->bind('id_permohonan', $_POST['id_permohonan']);
+        $this->db->bind('user_verifikator', $_POST['user_verifikator']);
+        $this->db->bind('rekomendasi_pejabat_cabang', $_POST['rekomendasi_pejabat']);
+        $this->db->bind('tgl_verifikasi', $_POST['tgl_verifikasi']);
+        $this->db->bind('status_permohonan', $_POST['status_permohonan']);
         $this->db->execute();
         return $this->db->rowCount();
     }

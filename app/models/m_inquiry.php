@@ -21,13 +21,13 @@ class m_inquiry
 
     public function lihat_data_periode()
     {
-        $this->db->query('SELECT * FROM tbl_rc_permohonan where tgl_permohonan between = :tgl_awal and =: tgl_akhir' );
+        $this->db->query('SELECT * FROM tbl_rc_permohonan where tgl_permohonan between = :tgl_awal and =: tgl_akhir');
         $this->db->bind('tgl_awal', $_POST['dari']);
         $this->db->bind('tgl_akhir', $_POST['ke']);
         return $this->db->resultSet();
     }
     public function jumlah_data_permohonan_pencairan()
-    { 
+    {
         $this->db->query('SELECT COUNT(*) as jumlah_data_pencairan from tbl_rc_permohonan where jenis_permohonan="PENCAIRAN SEBELUM JATUH TEMPO" AND status_permohonan != "DIBATALKAN"');
         return $this->db->single();
     }
@@ -67,9 +67,10 @@ class m_inquiry
         $this->db->query('SELECT A.*, B.nama_nasabah, C.* FROM tbl_rc_log A JOIN tbl_rc_permohonan B ON A.id_permohonan = B.id_permohonan JOIN tbl_rc_ref_log C ON A.id_log = C.id WHERE A.id_permohonan =:id_permohonan ORDER BY A.update_date ASC ');
         $this->db->bind('id_permohonan', $_POST['id_permohonan']);
         return $this->db->resultSet();
-    }  
+    }
 
-    public function get_daftar_permohonan(){
+    public function get_daftar_permohonan()
+    {
         // $this->db->query("SELECT  id_permohonan, jenis_permohonan, tgl_permohonan, nama_nasabah, jenis_produk, nominal, status_permohonan FROM tbl_rc_permohonan WHERE date(tgl_permohonan) >= :tgl_awal AND date(tgl_permohonan) <= :tgl_akhir");
         $this->db->query("SELECT  id_permohonan, jenis_permohonan, tgl_permohonan, nama_nasabah, jenis_produk, nominal, status_permohonan FROM tbl_rc_permohonan WHERE date(tgl_permohonan) >= :tgl_awal AND date(tgl_permohonan) <= :tgl_akhir");
         $this->db->bind('tgl_awal', $_POST['tanggal_awal']);
@@ -77,8 +78,8 @@ class m_inquiry
         return $this->db->resultSet();
     }
 
-    public function cetak_permohonan($startDate, $endDate, $branch){
-       
+    public function cetak_permohonan($startDate, $endDate, $branch)
+    {
         $query = 'SELECT * FROM tbl_rc_permohonan WHERE tgl_permohonan BETWEEN :start_date AND :end_date AND kantor_cabang = :branch';
         $this->db->query($query);
         $this->db->bind(':start_date', $startDate);
@@ -89,7 +90,7 @@ class m_inquiry
 
     public function export_csv()
     {
-        if ($_COOKIE['level'] == "INQUIRY" ){
+        if ($_COOKIE['level'] == "INQUIRY") {
             $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE tgl_permohonan >= :dari_tanggal  AND tgl_permohonan <= :sampai_tanggal AND kantor_cabang =:kantor_cabang');
             $this->db->bind('dari_tanggal', $_POST['dari_tanggal']);
             $this->db->bind('sampai_tanggal', $_POST['sampai_tanggal']);
@@ -107,27 +108,26 @@ class m_inquiry
     //     }
     // }
     public function export_csv_all()
-{
-    // Pastikan kuki 'level' ada sebelum mencoba mengaksesnya
-    if (isset($_COOKIE['level']) && $_COOKIE['level'] == "INQUIRY") {
-        // Pastikan tanggal yang diberikan ada sebelum menggunakannya
-        if (isset($_POST['dari_tanggal']) && isset($_POST['sampai_tanggal'])) {
-            $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE tgl_permohonan >= :dari_tanggal AND tgl_permohonan <= :sampai_tanggal');
-            $this->db->bind('dari_tanggal', $_POST['dari_tanggal']);
-            $this->db->bind('sampai_tanggal', $_POST['sampai_tanggal']);
-            return $this->db->resultSet();
+    {
+        // Pastikan kuki 'level' ada sebelum mencoba mengaksesnya
+        if (isset($_COOKIE['level']) && $_COOKIE['level'] == "INQUIRY") {
+            // Pastikan tanggal yang diberikan ada sebelum menggunakannya
+            if (isset($_POST['dari_tanggal']) && isset($_POST['sampai_tanggal'])) {
+                $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE tgl_permohonan >= :dari_tanggal AND tgl_permohonan <= :sampai_tanggal');
+                $this->db->bind('dari_tanggal', $_POST['dari_tanggal']);
+                $this->db->bind('sampai_tanggal', $_POST['sampai_tanggal']);
+                return $this->db->resultSet();
+            } else {
+                // Tanggal tidak diberikan, berikan respons atau lakukan sesuatu sesuai kebutuhan
+                // Misalnya, Anda bisa melempar suatu exception atau memberikan pesan kesalahan
+                // tergantung pada kebutuhan aplikasi Anda.
+                return null; // Atau lakukan sesuatu yang sesuai dengan logika aplikasi Anda
+            }
         } else {
-            // Tanggal tidak diberikan, berikan respons atau lakukan sesuatu sesuai kebutuhan
+            // Level tidak sesuai, berikan respons atau lakukan sesuatu sesuai kebutuhan
             // Misalnya, Anda bisa melempar suatu exception atau memberikan pesan kesalahan
             // tergantung pada kebutuhan aplikasi Anda.
             return null; // Atau lakukan sesuatu yang sesuai dengan logika aplikasi Anda
         }
-    } else {
-        // Level tidak sesuai, berikan respons atau lakukan sesuatu sesuai kebutuhan
-        // Misalnya, Anda bisa melempar suatu exception atau memberikan pesan kesalahan
-        // tergantung pada kebutuhan aplikasi Anda.
-        return null; // Atau lakukan sesuatu yang sesuai dengan logika aplikasi Anda
     }
-}
-
 }

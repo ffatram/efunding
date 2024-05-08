@@ -41,7 +41,41 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+         document.addEventListener("DOMContentLoaded", function() {
+            var selectedDate = "<?= $data['data_id']['tgl_pembentukan'] ?>"; // Ambil tanggal dari PHP
+            myFunction(selectedDate);
+        });
 
+        function myFunction(dateValue) {
+            // Ubah format tanggal sesuai dengan yang diterima oleh new Date()
+            var dateParts = dateValue.split("-");
+            var newDateValue = dateParts[1] + "/" + dateParts[2] + "/" + dateParts[0];
+
+            var date = new Date(newDateValue);
+            var day = date.getDate();
+
+            // Pastikan elemen-elemen yang dipilih ada dalam DOM
+            var hidden_nominal_penalti = document.getElementById("hidden_nominal_penalti");
+            var hidden_jumlah_hari_mengendap = document.getElementById("hidden_jumlah_hari_mengendap");
+            var hidden_jumlah_hari = document.getElementById("hidden_jumlah_hari");
+            var hidden_nominal_bunga_berjalan = document.getElementById("hidden_nominal_bunga_berjalan");
+
+            if (day !== 30) {
+                // Mengatur pointer events menjadi 'none'
+                hidden_nominal_penalti.style.pointerEvents = 'none';
+                hidden_jumlah_hari_mengendap.style.pointerEvents = 'none';
+                hidden_jumlah_hari.style.pointerEvents = 'none';
+                hidden_nominal_bunga_berjalan.style.pointerEvents = 'none';
+            } else {
+                // Mengatur pointer events menjadi 'auto'
+                hidden_nominal_penalti.style.pointerEvents = 'auto';
+                hidden_jumlah_hari_mengendap.style.pointerEvents = 'auto';
+                hidden_jumlah_hari.style.pointerEvents = 'auto';
+                hidden_nominal_bunga_berjalan.style.pointerEvents = 'auto';
+            }
+        }
+    </script>
 
 </head>
 
@@ -233,7 +267,7 @@
                                                     <label class="col-form-label">Kartu Identitas Lainnya <span class="ml-1" style="color:red;">*</span></label>
                                                     <input type="text" class="form-control" id="identitas_lain" name="identitas_lain" value="<?= $data['data_id']['jenis_kartu_identitas']  ?>" placeholder="ex: AKTA KELAHIRAN" oninput="hanyaHuruf(event);this.value = this.value.toUpperCase()">
                                                     <label class="col-form-label">Nomor Kartu Identitas Lainnya<span class="ml-1" style="color:red;">*</span></label><span style="font-style: italic; margin-left: 5px; font-size: 8px; color: green;">(Nomor Identitas yang terdaftar di CBS)</span></label>
-                                                    <input type="text" class="form-control" id="nomor_identitas_lain" name="nomor_identitas_lain" value="<?= $data['data_id']['nomor_identitas']  ?>"oninput="hanyaAngkaHuruf(event); if(this.value.length > 0) { this.value = this.value.toUpperCase(); }" maxlength="18">
+                                                    <input type="text" class="form-control" id="nomor_identitas_lain" name="nomor_identitas_lain" value="<?= $data['data_id']['nomor_identitas']  ?>" oninput="hanyaAngkaHuruf(event); if(this.value.length > 0) { this.value = this.value.toUpperCase(); }" maxlength="18">
                                                 </div>
 
                                                 <div class="form-group" style="display:none" id="hidden_nomor_ktp">
@@ -320,26 +354,39 @@
                                                 </div>
                                                 <div class=" form-group">
                                                     <label for="alamat-text" class="col-form-label">Keterangan Funding</label>
-                                                    <textarea class="form-control" name="keterangan_funding" placeholder="alasan untuk lebih meyakinkan approval" oninput="this.value = this.value.toUpperCase()"> <?= $data['data_id']['keterangan_funding']  ?> </textarea>
-                                                </div>
-
-
-                                                <div class="form-group" style="display:none" id="hidden_upload_bilyet">
-                                                    <!-- <label class="col-form-label">Nama Bilyet</label>
-                                                    <input type="text" class="form-control" name="nama_bilyet" onkeypress="return hanyaAngka(event)" value="<?= $data['data_id']['nama_gambar']  ?>"> -->
-
-                                                    <!-- <label for="alamat-text" class="col-form-label">Upload Bilyet</label>
-                                                    <div class="input-group">
-                                                        <div class="custom-file">
-                                                            <input type="file" class="custom-file-input" id="customFile" name="bilyet" value="<?= $data['data_id']['nama_gambar']  ?>" aria-describedby="inputGroupFileAddon04">
-                                                            <label class=" custom-file-label" for="customFile"><?= $data['data_id']['nama_gambar']  ?></label>
+                                                    <textarea class="form-control" name="keterangan_funding" placeholder="alasan untuk lebih meyakinkan approval" oninput="this.value = this.value.toUpperCase()"> <?= $data['data_id']['keterangan_funding'] ?> </textarea>
+                                                </div>                                        
+                                                <input type="hidden" class="form-control" name="bukti_persetujuan_manual" value="<?= $data['data_id']['bukti_persetujuan_manual'] ?>" />
+                                                <?php if (!empty($data['data_id']['bukti_persetujuan_manual'])) : ?>
+                                                    <label class="mt-2 mb-2">Bukti Persetujuan Manual</label><span class="ml-1" style="color:red;"></span>                                                   
+                                                    <br>
+                                                    <?php
+                                                    $file = $data['data_id']['bukti_persetujuan_manual'];
+                                                    $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+                                                    if ($fileExtension === 'pdf') {
+                                                        echo '<a href="' . BASEURL . '/upload/funding/bukti/' . $file . '" target="_blank">Lihat File</a>';
+                                                    } else {
+                                                        echo '<a href="' . BASEURL . '/upload/funding/bukti/' . $file . '" target="_blank">Lihat File</a>';
+                                                    }
+                                                    ?>
+                                                    <br>
+                                                    <br>
+                                                <?php else : ?>
+                                                    <div>
+                                                        <label for="alamat-text" class="col-form-label">Upload Bukti Persetujuan Manual</label>
+                                                        <div class="input-group">
+                                                            <div class="custom-file mb-3">
+                                                                <input type="file" class="custom-file-input" id="customFile" name="bukti_manual" accept=".jpg, .jpeg, .png .pdf" onchange="validateInput()">
+                                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                                            </div>
                                                         </div>
-                                                    </div> -->
+                                                    </div>
+                                                <?php endif; ?>
+                                                <div>
+                                                    <button id="btn_form_funding_edit_data_pencairan" type="submit" class="btn btn-primary btn-lg">Update</button>
+                                                    <a onclick="btn_batal_update_pencairan(event); return false" href="<?= BASEURL; ?>/cs_funding/pencairan_sebelum_jatuh_tempo" class="btn btn-secondary btn-lg">Batal</a>
                                                 </div>
-                                                <button id="btn_form_funding_edit_data_pencairan" type="submit" class="btn btn-primary btn-lg">Update</button>
-                                                <a onclick="btn_batal_update_pencairan(event); return false" href="<?= BASEURL; ?>/cs_funding/pencairan_sebelum_jatuh_tempo" class="btn btn-secondary btn-lg">Batal</a>
-                                                <!-- <button id="form_funding_edit_permohonan_pencairan" type="submit" name='btn_simpan_kredit_lama' value='btn_simpan_kredit_lama' class="btn btn-primary btn-lg">Simpan</button>
-                                            <a onclick="btn_batal_update_kredit(event); return false" href="<?= BASEURL; ?>/funding/permohonan_pencairan" class="btn btn-secondary btn-lg">Batal</a> -->
+
                                             </div>
                                         </div>
                                     </div>
@@ -499,6 +546,28 @@
     <script src="<?= BASEURL ?>/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
         $.widget.bridge('uibutton', $.ui.button)
+    </script>
+
+    <script>
+        // Custom file input label
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+
+        });
+    </script>
+
+    <script>
+        function validateInput() {
+            var fileInput = document.getElementById('customFile');
+            var filePath = fileInput.value;
+            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.pdf)$/i;
+
+            if (!allowedExtensions.exec(filePath)) {
+                alert('Hanya file dengan ekstensi .jpg, .jpeg, .png atau .pdf yang diizinkan!');
+                fileInput.value = ''; // Clear the input field
+            }
+        }
     </script>
     <!-- <script>
         document.addEventListener('DOMContentLoaded', function() {

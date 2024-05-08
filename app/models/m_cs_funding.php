@@ -337,6 +337,7 @@ class m_cs_funding
                 cif_keluarga = :cif_keluarga,
                 nomor_telepon_keluarga = :nomor_telepon_keluarga,
                 keterangan_funding = :keterangan_funding,
+                bukti_persetujuan_manual = :bukti_persetujuan_manual,
                 status_permohonan = :status_permohonan
                 WHERE id_permohonan= :id_permohonan";
 
@@ -371,6 +372,12 @@ class m_cs_funding
             $this->db->bind('cif_keluarga',  $_POST['cif_keluarga']);
             $this->db->bind('nomor_telepon_keluarga',  $_POST['nomor_telepon_keluarga']);
             $this->db->bind('keterangan_funding',  $_POST['keterangan_funding']);
+            if (!empty($_POST['bukti_manual'])){
+                $this->db->bind('bukti_persetujuan_manual',  $_POST['bukti_manual']);
+            }else{
+                $this->db->bind('bukti_persetujuan_manual',  $_POST['bukti_persetujuan_manual']);
+            }
+           
             $this->db->bind('status_permohonan',  'DIAJUKAN');
             $this->db->execute();
             return $this->db->rowCount();
@@ -394,6 +401,7 @@ class m_cs_funding
             cif_keluarga = :cif_keluarga,
             nomor_telepon_keluarga = :nomor_telepon_keluarga,
             keterangan_funding = :keterangan_funding,
+            bukti_persetujuan_manual = :bukti_persetujuan_manual,
             status_permohonan = :status_permohonan
             WHERE id_permohonan= :id_permohonan";
 
@@ -428,6 +436,11 @@ class m_cs_funding
             $this->db->bind('cif_keluarga',  $_POST['cif_keluarga']);
             $this->db->bind('nomor_telepon_keluarga',  $_POST['nomor_telepon_keluarga']);
             $this->db->bind('keterangan_funding',  $_POST['keterangan_funding']);
+            if (!empty($_POST['bukti_manual'])){
+                $this->db->bind('bukti_persetujuan_manual',  $_POST['bukti_manual']);
+            }else{
+                $this->db->bind('bukti_persetujuan_manual',  $_POST['bukti_persetujuan_manual']);
+            }
             $this->db->bind('status_permohonan',  'DIAJUKAN');
             $this->db->execute();
             return $this->db->rowCount();
@@ -1407,6 +1420,7 @@ class m_cs_funding
                      jumlah_hari_mengendap =:jumlah_hari_mengendap,
                      nominal_bunga_berjalan = :nominal_bunga_berjalan,
                      nomor_rekening_pencairan = :nomor_rekening_pencairan,
+                     bukti_persetujuan_manual = :bukti_persetujuan_manual,
                      keterangan_funding = :keterangan_funding
                      -- nama_gambar = :nama_gambar
                      WHERE id_permohonan= :id_permohonan";
@@ -1448,6 +1462,11 @@ class m_cs_funding
             $this->db->bind('jumlah_hari_mengendap',  $_POST['jumlah_hari_mengendap']);
             $this->db->bind('nominal_bunga_berjalan',  str_replace(".", "",  $_POST['nominal_bunga_berjalan']));
             $this->db->bind('nomor_rekening_pencairan',  $_POST['norek_pencairan']);
+            if (!empty($_POST['bukti_manual'])){
+                $this->db->bind('bukti_persetujuan_manual',  $_POST['bukti_manual']);
+            }else{
+                $this->db->bind('bukti_persetujuan_manual',  $_POST['bukti_persetujuan_manual']);
+            }
             $this->db->bind('keterangan_funding',  $_POST['keterangan_funding']);
             // $this->db->bind('nama_gambar',  $_POST['bilyet']);
             $this->db->execute();
@@ -1473,6 +1492,7 @@ class m_cs_funding
                      jumlah_hari = :jumlah_hari,
                      jumlah_hari_mengendap =:jumlah_hari_mengendap,
                      nominal_bunga_berjalan = :nominal_bunga_berjalan,
+                     bukti_persetujuan_manual = :bukti_persetujuan_manual,
                      keterangan_funding = :keterangan_funding 
                      -- nama_gambar = :nama_gambar
                      WHERE id_permohonan= :id_permohonan";
@@ -1513,6 +1533,11 @@ class m_cs_funding
             $this->db->bind('jumlah_hari',  $_POST['jumlah_hari']);
             $this->db->bind('jumlah_hari_mengendap',  $_POST['jumlah_hari_mengendap']);
             $this->db->bind('nominal_bunga_berjalan',  str_replace(".", "",  $_POST['nominal_bunga_berjalan']));
+            if (!empty($_POST['bukti_manual'])){
+                $this->db->bind('bukti_persetujuan_manual',  $_POST['bukti_manual']);
+            }else{
+                $this->db->bind('bukti_persetujuan_manual',  $_POST['bukti_persetujuan_manual']);
+            }
             $this->db->bind('keterangan_funding',  $_POST['keterangan_funding']);
             // $this->db->bind('nama_gambar',  $_POST['bilyet']);
             $this->db->execute();
@@ -1540,6 +1565,7 @@ class m_cs_funding
                      
                      nominal_bunga_berjalan = :nominal_bunga_berjalan,
                      nomor_rekening_pencairan = :nomor_rekening_pencairan,
+                     bukti_persetujuan_manual = :bukti_persetujuan_manual,
                      keterangan_funding = :keterangan_funding 
                  --    nama_gambar = :gambar_bilyet
                      WHERE id_permohonan= :id_permohonan";
@@ -1582,6 +1608,11 @@ class m_cs_funding
             $this->db->bind('jumlah_hari_mengendap',  $_POST['jumlah_hari_mengendap']);
             $this->db->bind('nominal_bunga_berjalan',  str_replace(".", "",  $_POST['nominal_bunga_berjalan']));
             $this->db->bind('nomor_rekening_pencairan',  $_POST['norek_pencairan']);
+            if (!empty($_POST['bukti_manual'])){
+                $this->db->bind('bukti_persetujuan_manual',  $_POST['bukti_manual']);
+            }else{
+                $this->db->bind('bukti_persetujuan_manual',  $_POST['bukti_persetujuan_manual']);
+            }
             $this->db->bind('keterangan_funding',  $_POST['keterangan_funding']);
             // $this->db->bind('nama_gambar',  $_POST['bilyet']);
             $this->db->execute();
@@ -1607,6 +1638,7 @@ class m_cs_funding
                      jumlah_hari = :jumlah_hari,
                      jumlah_hari_mengendap = :jumlah_hari_mengendap,
                      nominal_bunga_berjalan = :nominal_bunga_berjalan,
+                     bukti_persetujuan_manual = :bukti_persetujuan_manual,
                      keterangan_funding = :keterangan_funding
                      -- nama_gambar = :nama_gambar
                      WHERE id_permohonan= :id_permohonan";
@@ -1648,6 +1680,11 @@ class m_cs_funding
             $this->db->bind('jumlah_hari',  $_POST['jumlah_hari']);
             $this->db->bind('jumlah_hari_mengendap',  $_POST['jumlah_hari_mengendap']);
             $this->db->bind('nominal_bunga_berjalan',  str_replace(".", "",  $_POST['nominal_bunga_berjalan']));
+            if (!empty($_POST['bukti_manual'])){
+                $this->db->bind('bukti_persetujuan_manual',  $_POST['bukti_manual']);
+            }else{
+                $this->db->bind('bukti_persetujuan_manual',  $_POST['bukti_persetujuan_manual']);
+            }
             $this->db->bind('keterangan_funding',  $_POST['keterangan_funding']);
             // $this->db->bind('nama_gambar',  $_POST['bilyet']);
             $this->db->execute();

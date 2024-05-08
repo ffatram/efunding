@@ -384,9 +384,16 @@ class inquiry extends Controller
             $rows['nominal_bunga_berjalan'] = isset($row['nominal_bunga_berjalan']) ? number_format(($row['nominal_bunga_berjalan']), 0, ",", ".") : '';
             $rows['nomor_rekening_pencairan'] = $row['nomor_rekening_pencairan'];
             $rows['keterangan_funding'] = $row['keterangan_funding'];
+            
+            $rows['rekomendasi_pejabat_cabang'] = $row['rekomendasi_pejabat_cabang'];
+            $rows['user_verifikator'] = $row['user_verifikator'];
+
             $rows['nilai_suku_bunga_approval'] = $row['nilai_suku_bunga_approval'];
             $rows['jenis_permohonan_pencairan_sebelum_jt_approval'] = $row['jenis_permohonan_pencairan_sebelum_jt_approval'];
             $rows['keterangan_approval'] = $row['keterangan_approval'];
+
+            $rows['tgl_verifikasi'] = isset($row['tgl_verifikasi']) ? date('d-m-Y', strtotime($row['tgl_verifikasi'])) : '';
+
             $rows['tgl_batal'] = isset($row['tgl_batal']) ? date('d-m-Y', strtotime($row['tgl_batal'])) : '';
             $rows['tgl_pending'] = isset($row['tgl_pending']) ? date('d-m-Y', strtotime($row['tgl_pending'])) : '';
             $rows['tgl_pengajuan_ulang'] = isset($row['tgl_pengajuan_ulang']) ? date('d-m-Y', strtotime($row['tgl_pengajuan_ulang'])) : '';
@@ -433,9 +440,16 @@ class inquiry extends Controller
             $rows['nominal_bunga_berjalan'] = isset($row['nominal_bunga_berjalan']) ? number_format(($row['nominal_bunga_berjalan']), 0, ",", ".") : '';
             $rows['nomor_rekening_pencairan'] = $row['nomor_rekening_pencairan'];
             $rows['keterangan_funding'] = $row['keterangan_funding'];
+
+            $rows['rekomendasi_pejabat_cabang'] = $row['rekomendasi_pejabat_cabang'];
+            $rows['user_verifikator'] = $row['user_verifikator'];
+
             $rows['nilai_suku_bunga_approval'] = $row['nilai_suku_bunga_approval'];
             $rows['jenis_permohonan_pencairan_sebelum_jt_approval'] = $row['jenis_permohonan_pencairan_sebelum_jt_approval'];
             $rows['keterangan_approval'] = $row['keterangan_approval'];
+
+            $rows['tgl_verifikasi'] = isset($row['tgl_verifikasi']) ? date('d-m-Y', strtotime($row['tgl_verifikasi'])) : '';
+            
             $rows['tgl_batal'] = isset($row['tgl_batal']) ? date('d-m-Y', strtotime($row['tgl_batal'])) : '';
             $rows['tgl_pending'] = isset($row['tgl_pending']) ? date('d-m-Y', strtotime($row['tgl_pending'])) : '';
             $rows['tgl_pengajuan_ulang'] = isset($row['tgl_pengajuan_ulang']) ? date('d-m-Y', strtotime($row['tgl_pengajuan_ulang'])) : '';

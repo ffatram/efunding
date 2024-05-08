@@ -8,9 +8,6 @@ if (!isset($_SESSION['level'])) {
     exit;
 }
 
-
-
-
 class approval extends Controller
 {
     public function index()
@@ -21,6 +18,19 @@ class approval extends Controller
         $data['jumlah_disetujui'] = $this->model('m_approval')->jumlah_data_disetujui();
         $data['jumlah_ditolak'] = $this->model('m_approval')->jumlah_data_ditolak();
         $this->view('approval/beranda', $data);
+    }
+
+    public function form_rekomendasi_suku_bunga($id)
+    {
+        $_POST['id_permohonan'] =  $id;
+        $data['data_permohonan'] =  $this->model('m_approval')->lihat_data_id($_POST);
+        $this->view('approval/form_rekomendasi_suku_bunga', $data);
+    }
+    public function form_rekomendasi_pencairan($id)
+    {
+        $_POST['id_permohonan'] =  $id;
+        $data['data_permohonan'] =  $this->model('m_approval')->lihat_data_id($_POST);
+        $this->view('approval/form_rekomendasi_pencairan', $data);
     }
 
     public function form_approval($id)
@@ -42,7 +52,7 @@ class approval extends Controller
         $data['data_permohonan'] =  $this->model('m_approval')->lihat_data_id($_POST);
         $this->view('approval/form_approval_pencairan', $data);
     }
-   
+
     public function daftar_belum_approve()
     {
         $data['data_diajukan'] = $this->model('m_approval')->jumlah_data_permohonan();
@@ -117,6 +127,32 @@ class approval extends Controller
     //     echo $proses;
     // }
 
+    public function tambah_rekomendasi_pejabat()
+    {
+        $_POST['rekomendasi_pejabat'] = $_POST['rekomendasi_pejabat_cabang'];
+        $_POST['user_verifikator'] = $_COOKIE['nama_lengkap'];
+        $_POST['tgl_verifikasi'] = date("Y-m-d H:i:s");
+        $_POST['status_permohonan'] = "DIVERIFIKASI";
+        // if ($this->model('m_approval')->tambah_data_rekomendasi() > 0) {
+        if ($this->model('m_approval')->tambah_data_rekomendasi() > 0) {
+            header('Location:' . BASEURL . '/approval/daftar_belum_approve');
+        } else {
+            header('Location:' . BASEURL . '/approval/form_rekomendasi_pencairan');
+        }
+    }
+
+    public function tambah_rekomendasi_suku_bunga()
+    {
+        $_POST['rekomendasi_pejabat'] = $_POST['rekomendasi_pejabat_cabang'];
+        $_POST['user_verifikator'] = $_COOKIE['nama_lengkap'];
+        $_POST['tgl_verifikasi'] = date("Y-m-d H:i:s");
+        $_POST['status_permohonan'] = "DIVERIFIKASI";
+        if ($this->model('m_approval')->tambah_rekomendasi_suku_bunga() > 0) {
+            header('Location:' . BASEURL . '/approval/daftar_belum_approve');
+        } else {
+            header('Location:' . BASEURL . '/approval/form_rekomendasi_suku_bunga');
+        }
+    }
     // ini coba
     public function update_data_suku_bunga()
     {
@@ -127,7 +163,7 @@ class approval extends Controller
             $_POST['status_permohonan'] = "DISETUJUI";
             $_POST['tgl_pending'] = null;
             $proses = $this->model('m_rc_log')->approve_pemohon($_POST);
-        } else if ($_POST['approval'] != $_POST['suku_bunga_pengajuan']){
+        } else if ($_POST['approval'] != $_POST['suku_bunga_pengajuan']) {
             $_POST['status_permohonan'] = "DIPENDING";
             $_POST['tgl_pending'] = date("Y-m-d H:i:s");
             $proses = $this->model('m_rc_log')->pending_pemohon($_POST);

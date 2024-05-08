@@ -120,6 +120,7 @@
                                                         <label class="mt-2 mb-2">History Permohonan</label><span class="ml-1" style="color:red;"></span>
                                                         <textarea class="form-control" name="history_permohonan" disabled><?= $data['data_permohonan']['history_permohonan'] ?></textarea>
                                                     </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -127,8 +128,9 @@
                                     <div class="col-12 col-lg-6 col-xxl-6 ">
                                         <div class="card flex-fill">
                                             <div class="card-body">
-                                                <label class="mt-2 mb-2">Nama Keluarga</label><span class="ml-1" style="color:red;"></span>
+                                            <label class="mt-2 mb-2">Nama Keluarga</label><span class="ml-1" style="color:red;"></span>
                                                 <input type="text" class="form-control" name="nama_keluarga" value="<?= $data['data_permohonan']['nama_keluarga'] ?>" disabled />
+                                               
                                                 <label class="mt-2 mb-2">Nilai Akumulasi Simpanan</label><span class="ml-1" style="color:red;"></span>
                                                 <input type="text" class="form-control" name="nilai_akumulasi_deposito" value="<?= "Rp " . number_format($data['data_permohonan']['nilai_akumulasi_simpanan'], 0, ',', '.')  ?>" disabled />
 
@@ -153,9 +155,10 @@
                                                     <input type="hidden" class="form-control" name="suku_bunga_pengajuan" value="<?= $data['data_permohonan']['nilai_suku_bunga_pengajuan'] ?>" />
                                                     <label class="mt-2 mb-2">Keterangan Funding</label><span class="ml-1" style="color:red;"></span>
                                                     <textarea class="form-control" name="keterangan_funding" disabled><?= $data['data_permohonan']['keterangan_funding'] ?></textarea>
-                                                    <!-- <label class="mt-2 mb-2">Suku Bunga Approval</label><span class="ml-1" style="color:red;">*</span>
-                                                    <input type="text" class="form-control" name="suku_bunga_approval" id="suku_bunga_approval" oninput="hanyaAngka(event)">
-                                                    <label class="mt-2 mb-2">Keterangan Approval</label><span class="ml-1" style="color:red;"></span> -->
+                                                    <div style="display:none" id="hidden_rekomendasi">
+                                                        <label class="mt-2 mb-2">Catatan Rekomendasi Pejabat Cabang </label><span class="ml-1" style="color:red;"></span>
+                                                        <textarea class="form-control" style="height: 60px;" name="keterangan_funding" id="rekomendasi_pejabat_cabang" disabled><?= $data['data_permohonan']['rekomendasi_pejabat_cabang'] ?></textarea>
+                                                    </div>
                                                 </div>
                                                 <!-- tes-tes -->
 
@@ -191,6 +194,21 @@
         <?php
         }
 
+        ?>
+        <?php
+        if (!empty($data['data_permohonan']['rekomendasi_pejabat_cabang'])) {
+        ?>
+            <script>
+                document.getElementById("hidden_rekomendasi").style.display = "block";
+            </script>
+        <?php
+        } else {
+        ?>
+            <script>
+                document.getElementById("hidden_rekomendasi").style.display = "none";
+            </script>
+        <?php
+        }
         ?>
 
 
@@ -344,12 +362,12 @@
                                                             ?>
                                                         </tr>
                                                     <?php
-                                                    }else{
-                                                        ?>
-                                                     <tr>
-                                                        <td style="width: 200px; background-color: #F4F4F4; ">Jangka Waktu</td>
-                                                        <td><?= $data['data_permohonan']['jangka_waktu'] ?></td>
-                                                    </tr>
+                                                    } else {
+                                                    ?>
+                                                        <tr>
+                                                            <td style="width: 200px; background-color: #F4F4F4; ">Jangka Waktu</td>
+                                                            <td><?= $data['data_permohonan']['jangka_waktu'] ?></td>
+                                                        </tr>
                                                     <?php
                                                     }
                                                     ?>
@@ -371,7 +389,8 @@
                                                     </tr>
 
                                                     <tr>
-                                                        <td style="width: 200px; background-color: #F4F4F4; ">Keterangan Approval <span style="color: red;">&#9733;</span></td></td>
+                                                        <td style="width: 200px; background-color: #F4F4F4; ">Keterangan Approval <span style="color: red;">&#9733;</span></td>
+                                                        </td>
                                                         <td>
                                                             <textarea class="form-control" style="width: 100%; height: 100px;" name="keterangan_approval" id="keterangan_approval_reject" oninput="this.value = this.value.toUpperCase()" required></textarea>
                                                         </td>

@@ -82,7 +82,7 @@
 
 
 
-                    <form id="form_funding_edit_data_suku_bunga" id="form_update" action="<?= BASEURL; ?>/funding/update_data_suku_bunga" method="POST">
+                    <form id="form_funding_edit_data_suku_bunga" id="form_update" action="<?= BASEURL; ?>/funding/update_data_suku_bunga" method="POST" enctype="multipart/form-data">
                         <main class="content">
                             <div class="container-fluid p-0">
                                 <div class="row ">
@@ -105,7 +105,7 @@
                                                             <option value="<?= $row['nama_produk'] ?>" <?= $row['nama_produk'] == $data['data_suku_bunga']['jenis_produk'] ? 'selected="selected"' : ''; ?>><?= $row['nama_produk'] ?> </option>
                                                         <?php endforeach; ?>
                                                     </select>
-                                                </div>   
+                                                </div>
                                                 <div class="form-group">
                                                     <label class="col-form-label">Jenis Kartu Identitas</label>
                                                     <select name="jenis_kartu_identitas" class="form-control" id="jenis_kartu_identitas" onchange="showIdentitasLainnya(this)" required>
@@ -179,8 +179,6 @@
                                                             <option value="<?= $row['jangka_waktu'] ?>" <?= $row['jangka_waktu'] == $data['data_suku_bunga']['jangka_waktu'] ? 'selected="selected"' : ''; ?>><?= $row['jangka_waktu'] ?> </option>
                                                         <?php endforeach; ?>
                                                     </select>
-                                                    <!-- <label class="col-form-label">Nomor Rekening Deposito</label>
-                                                    <input type="text" class="form-control" name="norek_deposito" onkeypress="return hanyaAngka(event)" value="<?= $data['data_suku_bunga']['nomor_rekening_deposito']  ?>"> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -192,14 +190,13 @@
                                                         </div> -->
                                             <div class="card-body">
                                                 <div class="form-group">
-
                                                     <label class="col-form-label">Suku Bunga pengajuan</label>
                                                     <input type="text" class="form-control" name="suku_bunga_pengajuan" value="<?= $data['data_suku_bunga']['nilai_suku_bunga_pengajuan']  ?>" id="suku_bunga_pengajuan" oninput="hanyaAngka(event)">
                                                     <label class="col-form-label">Suku Bunga Counter</label>
                                                     <input type="text" class="form-control" name="suku_bunga_counter" id="suku_bunga_counter" value="<?= $data['data_suku_bunga']['suku_bunga_counter']  ?>" oninput="hanyaAngka(event)">
 
                                                     <label class="col-form-label">Nama Keluarga</label>
-                                                    <input type="text" class="form-control" name="nama_keluarga" value="<?= $data['data_suku_bunga']['nama_keluarga']  ?>" oninput="hanyaHuruf(event)">
+                                                    <input type="text" class="form-control" name="nama_keluarga" value="<?= $data['data_suku_bunga']['nama_keluarga']  ?>" oninput="hanyaHuruf(event);this.value = this.value.toUpperCase()">
                                                     <label for="alamat-text" class="col-form-label">Nilai Akumulasi Simpanan</label>
                                                     <input type="text" class="form-control" value="<?= number_format($data['data_suku_bunga']['nilai_akumulasi_simpanan'], 0, ',', '.')  ?>" name="nilai_akumulasi_simpanan" oninput="hanyaAngka(event); tandaPemisahTitik(this)">
                                                     <label class="col-form-label">CIF Keluarga</label>
@@ -209,6 +206,33 @@
                                                     <label for="alamat-text" class="col-form-label">Keterangan Funding</label>
                                                     <textarea class="form-control" name="keterangan_funding" oninput="this.value = this.value.toUpperCase()"> <?= $data['data_suku_bunga']['keterangan_funding']  ?></textarea>
                                                 </div>
+                                                <input type="hidden" class="form-control" name="bukti_persetujuan_manual" value="<?= $data['data_suku_bunga']['bukti_persetujuan_manual'] ?>" />
+                                                <?php if (!empty($data['data_suku_bunga']['bukti_persetujuan_manual'])) : ?>
+                                                    <label class="mt-2 mb-2">Bukti Persetujuan Manual</label><span class="ml-1" style="color:red;"></span>
+                                                    <br>
+                                                    <?php
+                                                    $file = $data['data_suku_bunga']['bukti_persetujuan_manual'];
+                                                    $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+                                                    if ($fileExtension === 'pdf') {
+                                                        echo '<a href="' . BASEURL . '/upload/funding/bukti/' . $file . '" target="_blank">Lihat File</a>';
+                                                    } else {
+                                                        echo '<a href="' . BASEURL . '/upload/funding/bukti/' . $file . '" target="_blank">Lihat File</a>';
+                                                    }
+                                                    ?>
+                                                    <br>
+                                                    <br>
+                                                <?php else : ?>
+                                                    <div>
+                                                        <label for="alamat-text" class="col-form-label">Upload Bukti Persetujuan Manual</label>
+                                                        <div class="input-group">
+                                                            <div class="custom-file mb-3">
+                                                                <input type="file" class="custom-file-input" id="customFile" name="bukti_manual" accept=".jpg, .jpeg, .png .pdf" onchange="validateInput()">
+                                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php endif; ?>
+                                            <div>
                                                 <button id="btn_form_funding_edit_data_suku_bunga" type="submit" class="btn btn-primary btn-lg">Update</button>
                                                 <a onclick="btn_batal_update_kredit(event); return false" href="<?= BASEURL; ?>/funding/suku_bunga" class="btn btn-secondary btn-lg">Batal</a>
                                             </div>
@@ -417,6 +441,28 @@
     <script src="<?= BASEURL ?>/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
         $.widget.bridge('uibutton', $.ui.button)
+    </script>
+
+    <script>
+        // Custom file input label
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+
+        });
+    </script>
+
+    <script>
+        function validateInput() {
+            var fileInput = document.getElementById('customFile');
+            var filePath = fileInput.value;
+            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.pdf)$/i;
+
+            if (!allowedExtensions.exec(filePath)) {
+                alert('Hanya file dengan ekstensi .jpg, .jpeg, .png atau .pdf yang diizinkan!');
+                fileInput.value = ''; // Clear the input field
+            }
+        }
     </script>
     <script>
         function showIdentitasLainnya(select) {

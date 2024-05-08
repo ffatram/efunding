@@ -220,7 +220,7 @@
                                                             <td><?= $row['status_permohonan'] ?></td>
                                                             <td>
                                                                 <?php
-                                                                if ($row['status_permohonan'] == 'DIAJUKAN') {
+                                                                if ($row['status_permohonan'] == 'DIAJUKAN' || $row['status_permohonan'] == 'DIVERIFIKASI') {
                                                                 ?>
                                                                     <a href="<?= BASEURL; ?>/cs_funding/edit_permohonan_pencairan/<?= $row['id_permohonan'] ?>" class="btn btn-outline-primary" id="edit">Edit</a>
                                                                     <button type='submit' id="hapus" class="btn btn-outline-danger btn_hapus" data-id_permohonan="<?= $row['id_permohonan'] ?>" data-nama_nasabah="<?= $row['nama_nasabah'] ?>" data-jenis_permohonan="<?= $row['jenis_permohonan'] ?>">Batal</button>

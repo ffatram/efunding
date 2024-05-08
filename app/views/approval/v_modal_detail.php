@@ -104,6 +104,24 @@
                                 <td style="width: 200px; background-color: #F4F4F4; ">Keterangan Funding</td>
                                 <td><?= $data['detail']['keterangan_funding'] ?></td>
                             </tr>
+                            <tr>
+                                <?php if (empty($data['detail']['rekomendasi_pejabat_cabang'])) { ?>
+                                    <td style="width: 200px; background-color: #F4F4F4; display:none; ">Rekomendasi Pejabat Cabang</td>
+                                    <td style='display:none;'><?= $data['detail']['rekomendasi_pejabat_cabang'] ?></td>
+                                <?php } else { ?>
+                                    <td style="width: 200px; background-color: #F4F4F4; ">Rekomendasi Pejabat Cabang</td>
+                                    <td><?= $data['detail']['rekomendasi_pejabat_cabang'] ?></td>
+                                <?php } ?>
+                            </tr>
+                            <tr>
+                                <?php if (empty($data['detail']['user_verifikator'])) { ?>
+                                    <td style="width: 200px; background-color: #F4F4F4; display:none;">Pejabat Pemberi Rekomendasi</td>
+                                    <td style='display:none;'></td>
+                                <?php } else { ?>
+                                    <td style="width: 200px; background-color: #F4F4F4;">Pejabat Pemberi Rekomendasi</td>
+                                    <td><?= $data['detail']['user_verifikator'] ?></td>
+                                <?php } ?>
+                            </tr>
                             <!-- <tr>
                                 <td style="width: 200px; background-color: #F4F4F4; ">Tanggal Permohonan</td>
                                 <td><?= $data['detail']['tgl_permohonan'] ?></td>

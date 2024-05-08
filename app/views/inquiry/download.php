@@ -138,9 +138,16 @@
                                             <th> Nominal Bunga Berjalan </th>
                                             <th> Nomor Rekening Pencairan </th>
                                             <th> Keterangan Funding </th>
+                                           
+                                            <th> Rekomendasi Pejabat Cabang </th>
+                                            <th> Pejabat Pemberi Rekomendasi </th>
+
                                             <th> Suku Bunga yang Diapprove </th>
                                             <th> Permohonan Pencairan yang Diapprove </th>  
                                             <th> Keterangan Approval </th>
+
+                                            <th> Tanggal Rekomendasi </th>
+                                           
                                             <th> Tanggal Batal </th>
                                             <th> Tanggal Pengajuan Ulang </th>
                                             <th> Tanggal Pending </th>
@@ -248,7 +255,6 @@
                     }],
 
                     "ajax": {
-
                         "url": "<?= BASEURL ?>" + url,
                         "type": 'POST',
                         "data": function(d) {
@@ -335,6 +341,12 @@
                             "data": "keterangan_funding"
                         },
                         {
+                            "data": "rekomendasi_pejabat_cabang"
+                        },
+                        {
+                            "data": "user_verifikator"
+                        },
+                        {
                             "data": "nilai_suku_bunga_approval"
                         },
                         {
@@ -342,6 +354,10 @@
                         },
                         {
                             "data": "keterangan_approval"
+                        },
+
+                        {
+                            "data": "tgl_verifikasi"
                         },
                         {
                             "data": "tgl_batal"
@@ -378,7 +394,6 @@
             }
 
             $(document).on('change', '.kode_cabang, .dari_tanggal, .sampai_tanggal', function() {
-
                 if (kode_cabang.val() != 'undefined') {
                     console.log(dari_tanggal.val());
                     console.log(sampai_tanggal.val());
@@ -395,12 +410,8 @@
                             data_table('/inquiry/get_load_csv').table.ajax.reload(null, false);
                         }
                     }
-
                 } else {
-
                 }
-
-
             })
 
 
@@ -419,20 +430,8 @@
             //     }
             // })
 
-
-
         })
     </script>
-
-
-
-
-
-
-
-
-
-
 
 </body>
 

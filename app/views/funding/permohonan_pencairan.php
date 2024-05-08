@@ -67,6 +67,31 @@
         }
     </style>
 
+    <script>
+        function myFunction(dateValue) {
+            var date = new Date(dateValue);
+            var day = date.getDate();
+            var hidden_nominal_penalti = document.getElementById("hidden_nominal_penalti");
+            var hidden_jumlah_hari_mengendap = document.getElementById("hidden_jumlah_hari_mengendap");
+            var hidden_jumlah_hari = document.getElementById("hidden_jumlah_hari");
+            var hidden_nominal_bunga_berjalan = document.getElementById("hidden_nominal_bunga_berjalan");
+            if (day !== 30) {
+                // Mengatur pointer events menjadi 'none'
+                hidden_nominal_penalti.style.pointerEvents = 'none';
+                hidden_jumlah_hari_mengendap.style.pointerEvents = 'none';
+                hidden_jumlah_hari.style.pointerEvents = 'none';
+                hidden_nominal_bunga_berjalan.style.pointerEvents = 'none';
+            } else {
+                // Mengatur pointer events menjadi 'auto'
+                hidden_nominal_penalti.style.pointerEvents = 'auto';
+                hidden_jumlah_hari_mengendap.style.pointerEvents = 'auto';
+                hidden_jumlah_hari.style.pointerEvents = 'auto';
+                hidden_nominal_bunga_berjalan.style.pointerEvents = 'auto';
+            }
+        }
+        
+    </script>
+
 </head>
 
 
@@ -291,7 +316,6 @@
                                                 <div class="card">
                                                     <div class="card-header">
                                                         <label class="col-form-label">Tanda Tangan Nasabah</label><span class="ml-1" style="color:red;">*</span>
-
                                                     </div>
                                                     <div class="card-body">
                                                         <!-- canvas tanda tangan  -->
@@ -310,8 +334,6 @@
                                                                 <span class="fas fa-eraser"></span>
                                                                 Clear
                                                             </button>
-
-
                                                         </div>
                                                     </div>
                                                 </div>
@@ -332,10 +354,9 @@
                                     </div>
                                 </div>
                             </div>
-
                         </main>
-
                     </form>
+
                     <script>
                         document.getElementById('fileInput').addEventListener('change', function() {
                             var fileInput = document.getElementById('fileInput');
@@ -355,33 +376,6 @@
                             document.getElementById('undo').disabled = false;
                             document.getElementById('clear').disabled = false;
                         });
-
-                        // document.getElementById('fileInput').addEventListener('change', function(event) {
-                        //     var file = event.target.files[0];
-                        //     var reader = new FileReader();
-                        //     reader.onload = function(event) {
-                        //         var img = new Image();
-                        //         img.onload = function() {
-                        //             var canvas = document.getElementById('signature-pad');
-                        //             var context = canvas.getContext('2d');
-
-                        //             // Bersihkan canvas sebelum menggambar gambar
-                        //             context.clearRect(0, 0, canvas.width, canvas.height);
-
-                        //             // Tentukan ukuran canvas sesuai dengan ukuran gambar
-                        //             canvas.width = 645; // Tentukan lebar canvas
-                        //             canvas.height = 229; // Tentukan tinggi canvas
-
-                        //             // Gambar gambar di canvas (skala ulang jika diperlukan)
-                        //             var scale = Math.min(canvas.width / img.width, canvas.height / img.height);
-                        //             var x = (canvas.width / 2) - (img.width / 2) * scale;
-                        //             var y = (canvas.height / 2) - (img.height / 2) * scale;
-                        //             context.drawImage(img, x, y, img.width * scale, img.height * scale);
-                        //         };
-                        //         img.src = event.target.result;
-                        //     };
-                        //     reader.readAsDataURL(file);
-                        // });
 
                         document.getElementById('fileInput').addEventListener('change', function(event) {
                             var file = event.target.files[0];
@@ -409,18 +403,6 @@
                             };
                             reader.readAsDataURL(file);
                         });
-
-                        // // Tambahkan script untuk menyesuaikan ukuran canvas berdasarkan ukuran layar perangkat
-                        // window.addEventListener('resize', function() {
-                        //     var canvas = document.getElementById('signature-pad');
-                        //     var width = window.innerWidth;
-                        //     var height = window.innerHeight;
-                        //     canvas.width = width;
-                        //     canvas.height = height;
-                        // });
-
-                        // // Panggil ulang saat halaman dimuat untuk memastikan ukuran canvas sesuai saat pertama kali dimuat
-                        // window.dispatchEvent(new Event('resize'));
                     </script>
                     <script>
                         // JavaScript
@@ -668,14 +650,13 @@
                             var nominalValue = inputNominal.value;
                             var tanggalAwal = new Date(dateInput.value);
                             tanggalAwal.setDate(tanggalAwal.getDate() + 1);
+                            console.log("Tanggal Awal: " + tanggalAwal);
                             var tanggalAkhir = new Date();
                             var selisihWaktu = tanggalAkhir.getTime() - tanggalAwal.getTime();
                             var selisihHari = Math.ceil(selisihWaktu / (1000 * 3600 * 24));
                             outputFieldMengendap.value = selisihHari;
 
                             var tanggalHariIni = new Date();
-
-
                             var tanggalJatuhTempoTerakhir = new Date(tanggalAwal);
                             tanggalJatuhTempoTerakhir.setDate(tanggalJatuhTempoTerakhir.getDate());
 
@@ -686,8 +667,7 @@
                                 tanggalJatuhTempoTerakhir.setMonth(tanggalJatuhTempoTerakhir.getMonth() - 1);
                             }
 
-                            // if (tanggalAwal.getDate() >= 30) {
-                            // Pengecekan jika tanggal bentuk jatuh pada bulan Februari
+
                             if (tanggalJatuhTempoTerakhir.getMonth() == 1 && tanggalJatuhTempoTerakhir.getDate() == 29) {
                                 var tahunKabisat = (tanggalJatuhTempoTerakhir.getFullYear() % 4 == 0 && tanggalJatuhTempoTerakhir.getFullYear() % 100 != 0) || (tanggalJatuhTempoTerakhir.getFullYear() % 400 == 0);
                                 if (!tahunKabisat) {
@@ -695,51 +675,24 @@
                                     tanggalJatuhTempoTerakhir = new Date(tanggalJatuhTempoTerakhir.getFullYear(), 1, 28);
                                 }
                             }
-                            // }
-
+                            console.log("Tanggal Jatuh Tempo Terakhir: " + tanggalJatuhTempoTerakhir);
                             var selisihWaktu = tanggalHariIni.getTime() - tanggalJatuhTempoTerakhir.getTime();
                             var selisihHari = Math.ceil(selisihWaktu / (1000 * 3600 * 24));
 
 
-
-
-                            // if (tanggalHariIni.getDate() === 1 && tanggalHariIni.getMonth() === tanggalJatuhTempoTerakhir.getMonth()) {
-                            //     selisihHari++;
-                            // }
-
-                            // if (selisihBulan === 0) {
-                            //     if (tanggalJatuhTempoTerakhir.getMonth() === 1) {
-                            //         var tahun = tanggalJatuhTempoTerakhir.getFullYear();
-                            //         var tahunKabisat = (tahun % 4 == 0 && (tahun % 100 != 0 || tahun % 400 == 0));
-                            //         selisihHari += (tahunKabisat && tanggalJatuhTempoTerakhir.getDate() === 29) ? 1 : 0;
-                            //     } else {
-                            //         selisihHari -= 1;
-                            //     }
-                            // } else {
-                            //     selisihHari += (selisihBulan > 0 && tanggalJatuhTempoTerakhir.getMonth() === 1) ? 1 : 0;
-                            // }
-
-
-
                             var tambahanHari = 0;
-                            console.log("Tanggal Jatuh Tempo Terakhir: " + tanggalJatuhTempoTerakhir);
 
-                            // if (tanggalAwal.getDate() >= 30 || tanggalAwal.getDate() === 1) {
-                            //     if (tanggalJatuhTempoTerakhir.getMonth() === 1) {
-
-                            //         var tahunKabisat = (tanggalJatuhTempoTerakhir.getFullYear() % 4 == 0 && tanggalJatuhTempoTerakhir.getFullYear() % 100 != 0) || (tanggalJatuhTempoTerakhir.getFullYear() % 400 == 0);
-                            //         tambahanHari = (tahunKabisat) ? 0 : 1;
-                            //     }
-                            // }
-                            // selisihHari += tambahanHari;
 
                             if (tanggalAwal.getMonth() === tanggalHariIni.getMonth() && tanggalAwal.getFullYear() === tanggalHariIni.getFullYear()) {
                                 outputField.value = outputFieldMengendap.value;
                             } else {
                                 outputField.value = selisihHari;
                             }
-
                         });
+
+
+
+
 
 
 
@@ -965,7 +918,7 @@
                                 alert("Inputan hanya boleh huruf dan angka");
                             }
                         }
-                        
+
                         function hanyaAngka1(evt) {
                             var charCode = (evt.which) ? evt.which : event.keyCode;
 

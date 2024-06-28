@@ -60,7 +60,7 @@
 
                         $this->db = new Database;
                         if ($_COOKIE['kd_jabatan'] == 'DIR') {
-                            $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE (jenis_permohonan ="PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah IS NULL AND status_permohonan = "DIVERIFIKASI") OR ((nilai_suku_bunga_pengajuan > 6.25  AND nilai_suku_bunga_pengajuan <= 6.75) AND status_permohonan ="DIVERIFIKASI")');
+                            $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE (jenis_permohonan ="PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah IS NULL AND status_permohonan = "DIVERIFIKASI")');
                             $this->db->execute();
                             $jumlah_diajukan =  $this->db->rowCount();
                         } else if ($_COOKIE['kd_jabatan'] == 'BM') {
@@ -95,7 +95,7 @@
                         } else {
                             // $this->db->query('SELECT * FROM tbl_rc_permohonan WHERE nilai_suku_bunga_pengajuan <= 5.75   AND kantor_cabang = :kantor_cabang AND status_permohonan ="DIAJUKAN"');
                             $this->db->query('SELECT * FROM tbl_rc_permohonan 
-                            WHERE ((nilai_suku_bunga_pengajuan <= 5.75 OR nilai_suku_bunga_pengajuan > 6.25) 
+                            WHERE (nilai_suku_bunga_pengajuan <= 5.75 
                             OR (jenis_permohonan ="PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah is null))
                             AND kantor_cabang = :kantor_cabang 
                             AND status_permohonan ="DIAJUKAN"');

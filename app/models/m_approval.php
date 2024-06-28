@@ -38,7 +38,7 @@ class m_approval
     {
         if ($_COOKIE['kd_jabatan'] == 'DIR') {
             // $this->db->query('SELECT * from tbl_rc_permohonan where (jenis_permohonan = "PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah IS NULL AND status_permohonan="DIAJUKAN" ) OR (nilai_suku_bunga_pengajuan > 6.25  AND status_permohonan ="DIAJUKAN")');
-            $this->db->query('SELECT * from tbl_rc_permohonan where (jenis_permohonan = "PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah IS NULL AND status_permohonan="DIVERIFIKASI" ) OR (nilai_suku_bunga_pengajuan > 6.25  AND status_permohonan ="DIVERIFIKASI")');
+            $this->db->query('SELECT * from tbl_rc_permohonan where (jenis_permohonan = "PENCAIRAN SEBELUM JATUH TEMPO" AND status_nasabah IS NULL AND status_permohonan="DIVERIFIKASI" )');
             return $this->db->resultSet();
         } else {
             if ($_COOKIE['nama_cabang'] == "CABANG UTAMA") {

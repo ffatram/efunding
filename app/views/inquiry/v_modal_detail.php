@@ -220,6 +220,21 @@
                                     ?>
                                         <script>
                                             document.getElementById('btn_diajukan').style.display = "block";
+                                            document.getElementById('btn_diverifikasi').style.display = "block";
+                                            document.getElementById('btn_dipending').style.display = "block";
+                                            document.getElementById('btn_diajukan_ulang').style.display = "block";
+                                            document.getElementById('btn_disetujui').style.display = "block";
+                                            document.getElementById('btn_ditolak').style.display = "block";
+                                            document.getElementById('btn_dilanjutkan').style.display = "block";
+                                            document.getElementById('btn_telah_diproses').style.display = "block";
+                                        </script>
+                                    <?php
+                                    }elseif ($kondisi == "DIVERIFIKASI") {
+                                        $buttonClass7 = "btn btn-danger btn-m active"; // Warna biru untuk status "diajukan"
+                                    ?>
+                                        <script>
+                                            document.getElementById('btn_diajukan').style.display = "block";
+                                            document.getElementById('btn_diverifikasi').style.display = "block";
                                             document.getElementById('btn_dipending').style.display = "block";
                                             document.getElementById('btn_diajukan_ulang').style.display = "block";
                                             document.getElementById('btn_disetujui').style.display = "block";
@@ -233,6 +248,7 @@
                                     ?>
                                         <script>
                                             document.getElementById('btn_diajukan').style.display = "block";
+                                            document.getElementById('btn_diverifikasi').style.display = "block";
                                             document.getElementById('btn_dipending').style.display = "block";
                                             document.getElementById('btn_diajukan_ulang').style.display = "block";
                                             document.getElementById('btn_disetujui').style.display = "block";
@@ -246,6 +262,7 @@
                                     ?>
                                         <script>
                                             document.getElementById('btn_diajukan').style.display = "block";
+                                            document.getElementById('btn_diverifikasi').style.display = "block";
                                             document.getElementById('btn_dipending').style.display = "block";
                                             document.getElementById('btn_diajukan_ulang').style.display = "block";
                                             document.getElementById('btn_disetujui').style.display = "block";
@@ -259,6 +276,7 @@
                                     ?>
                                         <script>
                                             document.getElementById('btn_diajukan').style.display = "block";
+                                            document.getElementById('btn_diverifikasi').style.display = "block";
                                             document.getElementById('btn_dipending').style.display = "block";
                                             document.getElementById('btn_diajukan_ulang').style.display = "block";
                                             document.getElementById('btn_disetujui').style.display = "block";
@@ -272,6 +290,7 @@
                                     ?>
                                         <script>
                                             document.getElementById('btn_diajukan').style.display = "block";
+                                            document.getElementById('btn_diverifikasi').style.display = "block";
                                             document.getElementById('btn_dipending').style.display = "block";
                                             document.getElementById('btn_diajukan_ulang').style.display = "block";
                                             document.getElementById('btn_disetujui').style.display = "none";
@@ -285,6 +304,7 @@
                                     ?>
                                         <script>
                                             document.getElementById('btn_diajukan').style.display = "block";
+                                            document.getElementById('btn_diverifikasi').style.display = "block";
                                             document.getElementById('btn_dipending').style.display = "block";
                                             document.getElementById('btn_diajukan_ulang').style.display = "block";
                                             document.getElementById('btn_disetujui').style.display = "block";
@@ -299,6 +319,7 @@
                                     ?>
                                         <script>
                                             document.getElementById('btn_diajukan').style.display = "block";
+                                            document.getElementById('btn_diverifikasi').style.display = "block";
                                             document.getElementById('btn_dipending').style.display = "block";
                                             document.getElementById('btn_diajukan_ulang').style.display = "block";
                                             document.getElementById('btn_disetujui').style.display = "block";
@@ -313,6 +334,9 @@
                                     <!-- Tombol HTML dengan kelas yang ditentukan oleh PHP -->
                                     <div class="button-container">
                                         <button id='btn_diajukan' style="display: none; float: left;" class="btn <?php echo $buttonClass; ?>">Diajukan</button>
+
+                                        <button id='btn_diverifikasi' style="display: none; float: left;" class="btn <?php echo $buttonClass7; ?>">Diverifikasi</button>
+
                                         <button id='btn_dipending' style="display: none; float: left;" class="btn <?php echo $buttonClass1; ?>">Dipending</button>
                                         <button id='btn_diajukan_ulang' style="display: none; float: left;" class="btn <?php echo $buttonClass2; ?>">Diajukan Ulang</button>
                                         <button id='btn_disetujui' style="display: none; float: left;" class="btn <?php echo $buttonClass3; ?>">Disetujui</button>

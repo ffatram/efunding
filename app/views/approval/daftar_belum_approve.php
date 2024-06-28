@@ -266,7 +266,7 @@
                                                                         <?php
                                                                         } else if (($row['jenis_permohonan'] == 'SUKU BUNGA KHUSUS' &&  $row['nilai_suku_bunga_pengajuan'] > 6.00)) {
                                                                         ?>
-                                                                            <button class="btn btn-outline-info" id="btn_modal_pencairan" data-id_permohonan="<?= $row['id_permohonan'] ?>">Detail</button>
+                                                                            <button class="btn btn-outline-info" id="btn_modal_detail" data-id_permohonan="<?= $row['id_permohonan'] ?>">Detail</button>
                                                                         <?php
                                                                         }
                                                                     }
